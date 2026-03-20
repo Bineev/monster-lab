@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://k15y2y2mejvy"]
+
+[ext_resource type="Script" uid="uid://d1eg6s3tqhq5v" path="res://scripts/other/stack.gd" id="1_tpkvb"]
+
+[node name="Stack" type="Area2D"]
+script = ExtResource("1_tpkvb")

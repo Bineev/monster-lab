@@ -1,0 +1,37 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="monster-lab"
+config/features=PackedStringArray("4.5", "Forward Plus")
+
+[autoload]
+
+DataManager="*res://scripts/global/data_manager.gd"
+SignalManager="*res://scripts/global/signal_manager.gd"
+SoundManager="*res://scripts/global/sound_manager.gd"
+PlayerManager="*res://scripts/global/player_manager.gd"
+GameManager="*res://scripts/global/game_manager.gd"
+
+[display]
+
+window/size/viewport_width=960
+window/size/viewport_height=540
+window/size/mode=3
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/stretch/scale_mode="integer"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+2d/snap/snap_2d_transforms_to_pixel=true
+2d/snap/snap_2d_vertices_to_pixel=true
