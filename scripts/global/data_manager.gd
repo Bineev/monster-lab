@@ -42,6 +42,6 @@ enum MonsterFamily {
 }
 
 
-var card_header_size : float = 8
+var card_header_size : float = 20
 
 var default_z_index : int = 5

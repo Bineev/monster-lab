@@ -1,21 +1,20 @@
-[gd_scene load_steps=12 format=3 uid="uid://coec2fnqd70g0"]
+[gd_scene load_steps=11 format=3 uid="uid://coec2fnqd70g0"]
 
 [ext_resource type="Script" uid="uid://c7xcd6biaogee" path="res://scripts/other/card.gd" id="1_d81rb"]
 [ext_resource type="StyleBox" uid="uid://cwov70q3x6lmv" path="res://styles/card_back.tres" id="2_6u4wf"]
 [ext_resource type="PackedScene" uid="uid://k15y2y2mejvy" path="res://scenes/stack.tscn" id="2_sy11y"]
 [ext_resource type="FontFile" uid="uid://dwfd8dwou7jlu" path="res://styles/PixelifySans-VariableFont_wght.ttf" id="3_kg30u"]
-[ext_resource type="Texture2D" uid="uid://bbeqk0amg0a6" path="res://img/m_head_test.png" id="3_ktuci"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kg30u"]
 bg_color = Color(0.1254902, 0.18039216, 0.21568628, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_kg30u"]
 font = ExtResource("3_kg30u")
-font_size = 4
+font_size = 8
 font_color = Color(0.84313726, 0.70980394, 0.5803922, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kg30u"]
-size = Vector2(40, 50)
+size = Vector2(80, 110)
 
 [sub_resource type="Animation" id="Animation_sy11y"]
 length = 0.001
@@ -75,9 +74,10 @@ script = ExtResource("1_d81rb")
 stack_scene = ExtResource("2_sy11y")
 
 [node name="panel_back" type="PanelContainer" parent="."]
-custom_minimum_size = Vector2(0, 50)
+custom_minimum_size = Vector2(80, 110)
 offset_right = 40.0
 offset_bottom = 40.0
+size_flags_vertical = 0
 mouse_filter = 2
 mouse_default_cursor_shape = 2
 theme_override_styles/panel = ExtResource("2_6u4wf")
@@ -92,11 +92,12 @@ theme_override_constants/margin_bottom = 5
 [node name="container_content" type="VBoxContainer" parent="panel_back"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 0
+size_flags_vertical = 0
+theme_override_constants/separation = 5
 
 [node name="PanelContainer" type="PanelContainer" parent="panel_back/container_content"]
-custom_minimum_size = Vector2(0, 8)
 layout_mode = 2
+size_flags_vertical = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_kg30u")
 
@@ -107,16 +108,16 @@ text = "SOME HEAD"
 label_settings = SubResource("LabelSettings_kg30u")
 horizontal_alignment = 1
 vertical_alignment = 1
+uppercase = true
 
 [node name="rect_main_img" type="TextureRect" parent="panel_back/container_content"]
 unique_name_in_owner = true
 layout_mode = 2
-texture = ExtResource("3_ktuci")
 stretch_mode = 3
 
 [node name="collision_card" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(20, 25)
+position = Vector2(40, 55)
 shape = SubResource("RectangleShape2D_kg30u")
 
 [node name="anim_card" type="AnimationPlayer" parent="."]

@@ -2,3 +2,6 @@
 
 [resource]
 bg_color = Color(0.84313726, 0.70980394, 0.5803922, 1)
+shadow_color = Color(0.0627451, 0.078431375, 0.12156863, 0.7529412)
+shadow_size = 3
+shadow_offset = Vector2(-1, 0)
