@@ -3,7 +3,7 @@ extends Area2D
 
 class_name Card
 
-@export var stack_scene : PackedScene = preload('res://scenes/stack.tscn')
+@export var stack_scene : PackedScene
 @export var is_dragging : bool
 @export var stack : Stack
 @export var intersected_card : Card
@@ -36,23 +36,26 @@ func change_state(new_state : DataManager.CardState):
 		DataManager.CardState.ON_FIELD:
 			change_collision_to_stacked_state()
 		DataManager.CardState.DRAGGED:
-			if prev_state == DataManager.CardState.IN_STACK:
+			if prev_state == DataManager.CardState.IN_STACK and not (stack and stack.is_dragging):
 				stack.remove_card(self)
 				#stack.calculate()
+				is_in_stack = false
 			change_collision_to_dragged_state()
 			z_index = 100
 		DataManager.CardState.HOVER_STACK:
 			pass
 		DataManager.CardState.ENTER_STACK:
+			change_collision_to_stacked_state()
 			enter_to_stack()
-			#change_collision_to_dragged_state()
 		DataManager.CardState.IN_STACK:
+			is_in_stack = true
 			stack.calculate()
+			intersected_card = null
 		DataManager.CardState.EXIT_STACK:
 			pass
 		DataManager.CardState.DESTROYED:
 			pass
-	print(DataManager.CardState.keys()[card_state])
+	print(DataManager.CardState.keys()[card_state] + ' ' + self.name)
 
 
 func drop_card():
@@ -64,16 +67,22 @@ func drop_card():
 
 
 func _on_area_entered(area: Area2D) -> void:
+	# здесь добавить чек на стак, если будут баги
+	if card_state == DataManager.CardState.HOVER_STACK or not card_state == DataManager.CardState.DRAGGED:
+		return
 	intersected_card = area
 	change_state(DataManager.CardState.HOVER_STACK)
-	stack = intersected_card.stack
+	if not stack:
+		stack = intersected_card.stack
 
 
 func _on_area_exited(area: Area2D) -> void:
-	intersected_card = area
-	if card_state == DataManager.CardState.IN_STACK or card_state == DataManager.CardState.ENTER_STACK:
+	if not card_state == DataManager.CardState.HOVER_STACK or card_state == DataManager.CardState.DRAGGED:
 		return
-	stack = null
+	intersected_card = area
+	# здесь ошибка
+	if not is_in_stack:
+		stack = null
 	change_state(DataManager.CardState.DRAGGED)
 
 
@@ -96,7 +105,11 @@ func change_collision_to_stacked_state():
 func change_collision_to_dragged_state():
 	set_collision_layer_value(2, false)
 	set_collision_mask_value(2, true)
-	
+
+
+func change_collision_to_invisible_state():
+	set_collision_layer_value(2, false)
+	set_collision_mask_value(2, false)
 	
 	
 func enter_to_stack():
@@ -104,7 +117,7 @@ func enter_to_stack():
 		create_stack()
 	else:
 		stack.add_card(self)
-		change_state(DataManager.CardState.IN_STACK)
+		intersected_card = null
 
 
 func _on_anim_card_animation_finished(anim_name: StringName) -> void:
@@ -133,8 +146,6 @@ func _on_anim_card_animation_finished(anim_name: StringName) -> void:
 		#position += event.relative
 
 func _on_input_event(_viewport, event, _shape_idx):
-	if card_state == DataManager.CardState.APPEARS or card_state == DataManager.CardState.ENTER_STACK:
-		return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			# Начинаем перетаскивание и запоминаем смещение мыши относительно центра
@@ -143,8 +154,10 @@ func _on_input_event(_viewport, event, _shape_idx):
 			offset = global_position - get_global_mouse_position()
 		else:
 			# Отпускаем объект
-			is_dragging = false
-			drop_card()
+			if card_state == DataManager.CardState.DRAGGED or card_state == DataManager.CardState.HOVER_STACK:
+				print(self.name + ' dropped')
+				is_dragging = false
+				drop_card()
 
 
 func _input(event):
@@ -159,11 +172,33 @@ func _input(event):
 
 
 func create_stack():
+	print('create stack working')
 	stack = stack_scene.instantiate()
 	GameManager.level.add_child(stack)
 	stack.global_position = intersected_card.global_position
-	#intersected_card.input_pickable = false
-	#self.input_pickable = false
+	intersected_card.input_pickable = false
+	self.input_pickable = false
 	intersected_card.stack = stack
-	stack.add_card(intersected_card)
+	# здесь цимес
+	intersected_card.change_state(DataManager.CardState.ENTER_STACK)
 	stack.add_card(self)
+	intersected_card = null
+
+
+func merge_stacks():
+	# значит у нас уже стек
+	# если у карты пересечения есть стек
+	if intersected_card.stack:
+		# мерджим стеки
+		var copy_stack : Stack = stack
+		for card in stack.cards: 
+			intersected_card.stack.add_card(card)
+		copy_stack.queue_free()
+	else:
+		# если карта одиночка, то добавляем ее в свои стек
+		stack.global_position = intersected_card.global_position
+		stack.add_card(intersected_card, true)
+
+
+func get_size():
+	return collision_card.shape.size

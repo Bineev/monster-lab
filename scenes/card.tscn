@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://coec2fnqd70g0"]
+[gd_scene load_steps=12 format=3 uid="uid://coec2fnqd70g0"]
 
 [ext_resource type="Script" uid="uid://c7xcd6biaogee" path="res://scripts/other/card.gd" id="1_d81rb"]
 [ext_resource type="StyleBox" uid="uid://cwov70q3x6lmv" path="res://styles/card_back.tres" id="2_6u4wf"]
+[ext_resource type="PackedScene" uid="uid://k15y2y2mejvy" path="res://scenes/stack.tscn" id="2_sy11y"]
 [ext_resource type="FontFile" uid="uid://dwfd8dwou7jlu" path="res://styles/PixelifySans-VariableFont_wght.ttf" id="3_kg30u"]
 [ext_resource type="Texture2D" uid="uid://bbeqk0amg0a6" path="res://img/m_head_test.png" id="3_ktuci"]
 
@@ -71,6 +72,7 @@ _data = {
 [node name="Card" type="Area2D"]
 collision_mask = 0
 script = ExtResource("1_d81rb")
+stack_scene = ExtResource("2_sy11y")
 
 [node name="panel_back" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(0, 50)
