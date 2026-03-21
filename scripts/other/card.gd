@@ -14,16 +14,16 @@ class_name Card
 @export var prev_z_index : int
 @export var card_type : DataManager.CardType
 @export var production_type : DataManager.ProductionType
+@export var card_texture : Texture2D
 
 @onready var collision_card: CollisionShape2D = %collision_card
 @onready var anim_card: AnimationPlayer = %anim_card
+@onready var activate_timer: Timer = %activate_timer
+@onready var rect_main_img: TextureRect = %rect_main_img
+@onready var label_header: Label = %label_header
 
 
 func _ready() -> void:
-	initialize()
-
-
-func initialize():
 	change_state(DataManager.CardState.APPEARS)
 
 

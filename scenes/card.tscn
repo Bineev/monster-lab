@@ -125,6 +125,10 @@ libraries = {
 &"": SubResource("AnimationLibrary_6ligt")
 }
 
+[node name="activate_timer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 5.0
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_area_exited"]
 [connection signal="input_event" from="." to="." method="_on_input_event"]

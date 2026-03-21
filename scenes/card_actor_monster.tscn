@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://22qo63jqb87q"]
+
+[ext_resource type="PackedScene" uid="uid://dv1lj8l5ryf51" path="res://scenes/card_actor.tscn" id="1_gkcy4"]
+[ext_resource type="Script" uid="uid://cfnbmna8drwsc" path="res://scripts/other/card_actor_monster.gd" id="2_87efw"]
+
+[node name="CardActorMonster" instance=ExtResource("1_gkcy4")]
+script = ExtResource("2_87efw")
+monster_res = null
+monster_perc = 0
+monster_parts = Array[Resource]([])

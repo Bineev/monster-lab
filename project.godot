@@ -20,11 +20,13 @@ SignalManager="*res://scripts/global/signal_manager.gd"
 SoundManager="*res://scripts/global/sound_manager.gd"
 PlayerManager="*res://scripts/global/player_manager.gd"
 GameManager="*res://scripts/global/game_manager.gd"
+DiggManager="*res://scripts/global/digg_manager.gd"
 
 [display]
 
 window/size/viewport_width=960
 window/size/viewport_height=540
+window/size/mode=3
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/stretch/scale_mode="integer"

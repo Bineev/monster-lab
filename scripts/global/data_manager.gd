@@ -6,7 +6,7 @@ enum CardState {
 }
 
 enum CardType {
-	PRODUCTION, MONSTER_PART, MONSTER, ENVIRONMENT, RES, ITEM, RECEPT
+	PRODUCTION, LOCATION, MONSTER_PART, MONSTER, ENVIRONMENT, RES, ITEM, RECEPT
 }
 
 enum OwnerType {
@@ -28,6 +28,19 @@ enum GeneType {
 enum ProductionType {
 	PART_CREATOR, RES_CREATOR, MONSTER_CREATOR, MONSTER_MERGER
 }
+
+enum LocationType {
+	GRAVEYARD, DARK_FARM, MYCELIUM
+}
+
+enum PercType {
+	DIGGER, FIGHTER
+}
+
+enum MonsterFamily {
+	BONES, ANIMAL, HUMAN
+}
+
 
 var card_header_size : float = 8
 

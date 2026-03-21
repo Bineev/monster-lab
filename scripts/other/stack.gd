@@ -6,7 +6,9 @@ class_name Stack
 
 @export var cards : Array[Card]
 @export var production_card : Card
+@export var location_card : Card
 @export var is_can_product : bool
+@export var is_can_digg : bool
 @export var is_dragging : bool
 @export var offset : Vector2 = Vector2.ZERO
 
@@ -21,7 +23,7 @@ func create_collision():
 
 
 func add_card(card : Card, is_in_start : bool = false):
-	print('add card working')
+	stop_production()
 	if not is_in_start:
 		cards.append(card)
 	else:
@@ -32,6 +34,7 @@ func add_card(card : Card, is_in_start : bool = false):
 
 
 func remove_card(card : Card):
+	stop_production()
 	cards.erase(card)
 	card.reparent(GameManager.level)
 	if cards.size() < 2:
@@ -50,11 +53,24 @@ func calculate():
 	change_collision()
 	align_cards()
 
-	if cards[0].card_type == DataManager.CardType.PRODUCTION:
-		production_card = cards[0]
-		is_can_product = check_possible_production(production_card)
-		if is_can_product:
-			start_production()
+	match cards[0].card_type:
+		DataManager.CardType.PRODUCTION:
+			production_card = cards[0]
+			is_can_product = check_possible_production(production_card)
+			if is_can_product:
+				start_production()
+		DataManager.CardType.LOCATION:
+			location_card = cards[0]
+			is_can_digg = check_possible_digging(location_card)
+			if is_can_digg:
+				start_digging()
+
+
+func check_possible_digging(card : Card):
+	var content_cards : Array[Card] = cards.slice(1)
+	if content_cards.size() == 1 and content_cards[0].card_type == DataManager.CardType.MONSTER:
+		return true
+	return false 
 
 
 func align_ordering():
@@ -101,6 +117,19 @@ func start_production():
 
 func stop_production():
 	'Production stopped'
+
+
+func start_digging():
+	location_card.initialize(cards[1]) 
+	location_card.digg()
+
+
+func continue_digging():
+	location_card.continue_digging()
+
+
+func stop_digging():
+	location_card.stop_digging()
 
 
 func close_stack():
