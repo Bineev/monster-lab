@@ -5,12 +5,17 @@ class_name Stack
 
 
 @export var cards : Array[Card]
-@export var production_card : Card
+@export var production_card : CardProduction
 @export var location_card : CardLocation
 @export var is_can_product : bool
 @export var is_can_digg : bool
 @export var is_dragging : bool
 @export var offset : Vector2 = Vector2.ZERO
+@export var has_body : bool
+@export var has_hand : bool
+@export var has_head : bool
+@export var has_foot : bool
+@export var parts : Array[CardActorPart]
 
 @onready var collision_stack: CollisionShape2D = %collision_stack
 @onready var activation_progress: ProgressBar = %activation_progress
@@ -105,10 +110,48 @@ func check_possible_production(card : Card):
 	var content_cards : Array[Card] = cards.slice(1)
 	match card.production_type:
 		DataManager.ProductionType.PART_CREATOR:
+			if content_cards.size() != DataManager.parts_size:
+				return false
 			for content_card in content_cards:
 				if content_card.card_type != DataManager.CardType.MONSTER_PART:
 					return false
-			return true
+				else:
+					match content_card.part_type:
+						DataManager.MonsterPartType.BODY:
+							has_body = true
+							var is_already_has_part : bool
+							for part in parts:
+								if part.part_type == DataManager.MonsterPartType.BODY:
+									is_already_has_part = true
+							if not is_already_has_part:
+								parts.append(content_card)
+						DataManager.MonsterPartType.HAND:
+							has_hand = true
+							var is_already_has_part : bool
+							for part in parts:
+								if part.part_type == DataManager.MonsterPartType.HAND:
+									is_already_has_part = true
+							if not is_already_has_part:
+								parts.append(content_card)
+						DataManager.MonsterPartType.FOOT:
+							has_foot = true
+							var is_already_has_part : bool
+							for part in parts:
+								if part.part_type == DataManager.MonsterPartType.FOOT:
+									is_already_has_part = true
+							if not is_already_has_part:
+								parts.append(content_card)
+						DataManager.MonsterPartType.HEAD:
+							has_head = true
+							var is_already_has_part : bool
+							for part in parts:
+								if part.part_type == DataManager.MonsterPartType.HEAD:
+									is_already_has_part = true
+							if not is_already_has_part:
+								parts.append(content_card)
+			if parts.size() == 4:
+				return true
+			return false
 		DataManager.ProductionType.MONSTER_CREATOR:
 			pass
 		DataManager.ProductionType.MONSTER_MERGER:
@@ -118,11 +161,17 @@ func check_possible_production(card : Card):
 
 
 func start_production():
-	'Production started'
+	if production_card and not production_card.is_product_in_progress:
+		parts[parts.size() - 1].input_pickable = false
+		activation_progress.show()
+		production_card.set_parts(parts)
+		production_card.product()
 
 
 func stop_production():
-	'Production stopped'
+	pass
+	#if production_card:
+		#production_card.stop_product()
 
 
 func start_digging():

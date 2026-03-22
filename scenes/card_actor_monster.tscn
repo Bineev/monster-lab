@@ -10,6 +10,9 @@ monster_res = null
 monster_perc = 0
 monster_parts = Array[ExtResource("3_rkygk")]([])
 
+[node name="rect_main_img" parent="panel_back/container_content" index="1"]
+custom_minimum_size = Vector2(64, 64)
+
 [node name="sprite_container" type="Node2D" parent="panel_back/container_content" index="2"]
 unique_name_in_owner = true
 position = Vector2(45, 55)

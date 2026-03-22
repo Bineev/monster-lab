@@ -59,12 +59,15 @@ func continue_product():
 
 
 func _on_activate_timer_timeout() -> void:
+	activate_timer.stop()
 	remaining_product_count -= 1
 	update_res_count_ui()
+	stack.activation_progress.hide()
 	create()
+	destroy()
 	if remaining_product_count == 0:
-		activate_timer.stop()
-		destroy()
+		var tween = create_tween()
+		tween.tween_callback(queue_free).set_delay(0.3)
 
 
 func set_parts(new_parts : Array[CardActorPart]):
@@ -72,18 +75,18 @@ func set_parts(new_parts : Array[CardActorPart]):
 
 
 func destroy():
+	for part in parts:
+		part.queue_free()
 	if stack and is_instance_valid(stack):
 		stack.remove_card(self)
-	var tween = create_tween()
-	tween.tween_callback(queue_free).set_delay(0.3)
 
 
 func create():
 	match production_type:
-		DataManager.ProductionType.MONSTER_CREATOR:
+		DataManager.ProductionType.PART_CREATOR:
 			var part_reses : Array[PartRes]
 			for part in parts:
-				part_reses.append(part)
+				part_reses.append(part.part_res)
 				
 			var monster_res : MonsterRes = MonsterManager.create_monster_by_parts(part_reses)
 			var monster_scene : PackedScene = EntityManager.create_entity_scene(monster_res)

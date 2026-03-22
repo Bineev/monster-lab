@@ -28,9 +28,9 @@ func create_monster_by_parts(parts : Array[PartRes]):
 			DataManager.MonsterPartType.HEAD:
 				head_res = part
 			DataManager.MonsterPartType.FOOT:
-				hand_res = part
-			DataManager.MonsterPartType.BODY:
 				foot_res = part
+			DataManager.MonsterPartType.HAND:
+				hand_res = part
 		percs.append(part.part_perc)
 		families.append(part.part_family)
 		total_health += part.actor_health
