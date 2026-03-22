@@ -24,6 +24,7 @@ GameManager="*res://scripts/global/game_manager.gd"
 EntityManager="*res://scripts/global/entity_manager.gd"
 MonsterManager="*res://scripts/global/monster_manager.gd"
 LocationManager="*res://scripts/global/location_manager.gd"
+ProductionManager="*res://scripts/global/production_manager.gd"
 
 [display]
 

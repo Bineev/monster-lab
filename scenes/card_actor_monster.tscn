@@ -10,5 +10,21 @@ monster_res = null
 monster_perc = 0
 monster_parts = Array[ExtResource("3_rkygk")]([])
 
+[node name="sprite_container" type="Node2D" parent="panel_back/container_content" index="2"]
+unique_name_in_owner = true
+position = Vector2(45, 55)
+
+[node name="sprite_foot" type="Sprite2D" parent="panel_back/container_content/sprite_container" index="0"]
+unique_name_in_owner = true
+
+[node name="sprite_body" type="Sprite2D" parent="panel_back/container_content/sprite_container" index="1"]
+unique_name_in_owner = true
+
+[node name="sprite_hand" type="Sprite2D" parent="panel_back/container_content/sprite_container" index="2"]
+unique_name_in_owner = true
+
+[node name="sprite_head" type="Sprite2D" parent="panel_back/container_content/sprite_container" index="3"]
+unique_name_in_owner = true
+
 [node name="HBoxContainer" parent="panel_back/container_content/MarginContainer" index="0"]
 size_flags_horizontal = 4

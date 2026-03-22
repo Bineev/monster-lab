@@ -10,8 +10,8 @@
 script = ExtResource("2_26cfb")
 actor_name = ""
 actor_desc = ""
-actor_health = ""
-actor_damage = ""
+actor_health = 0
+actor_damage = 0
 
 [node name="panel_back" parent="." index="0"]
 offset_right = 80.0

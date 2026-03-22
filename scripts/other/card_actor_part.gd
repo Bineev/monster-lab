@@ -5,6 +5,7 @@ class_name CardActorPart
 
 @export var part_res : PartRes
 @export var part_perc : DataManager.PercType
+@export var part_type : DataManager.MonsterPartType
 
 
 func initialize():
@@ -18,6 +19,7 @@ func initialize():
 	actor_damage = part_res.actor_damage
 	card_texture = part_res.card_texture
 	part_perc = part_res.part_perc
+	part_type = part_res.part_type
 	
 	label_header.text = actor_name
 	rect_main_img.texture = card_texture

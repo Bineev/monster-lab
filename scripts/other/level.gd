@@ -13,3 +13,4 @@ func _ready() -> void:
 	MonsterManager.create_grandpa()
 	MonsterManager.create_grandpa()
 	LocationManager.create_graveyard()
+	ProductionManager.create_stapler()

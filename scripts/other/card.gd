@@ -14,7 +14,6 @@ class_name Card
 @export var prev_z_index : int
 @export var card_type : DataManager.CardType
 @export var card_grade : DataManager.EntityGrade
-@export var production_type : DataManager.ProductionType
 @export var card_texture : Texture2D
 
 @onready var collision_card: CollisionShape2D = %collision_card

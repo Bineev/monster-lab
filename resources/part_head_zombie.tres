@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_oprjj")
 part_family = 3
+part_type = 1
 actor_health = "2"
 actor_damage = "0"
 card_name = "башка зомби"

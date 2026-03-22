@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("2_xfclp")
 part_family = 3
+part_type = 2
 actor_health = "3"
 actor_damage = "3"
 card_name = "ножки зомби"
