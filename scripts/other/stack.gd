@@ -13,6 +13,7 @@ class_name Stack
 @export var offset : Vector2 = Vector2.ZERO
 
 @onready var collision_stack: CollisionShape2D = %collision_stack
+@onready var activation_progress: ProgressBar = %activation_progress
 
 
 func create_collision():
@@ -24,6 +25,7 @@ func create_collision():
 
 func add_card(card : Card, is_in_start : bool = false):
 	stop_production()
+	stop_digging()
 	if not is_in_start:
 		cards.append(card)
 	else:
@@ -35,6 +37,7 @@ func add_card(card : Card, is_in_start : bool = false):
 
 func remove_card(card : Card):
 	stop_production()
+	stop_digging()
 	cards.erase(card)
 	card.reparent(GameManager.level)
 	if cards.size() < 2:
@@ -48,6 +51,7 @@ func calculate():
 		collision_stack.shape = create_collision()
 		collision_stack.position.x += collision_stack.shape.size.x / 2
 		collision_stack.position.y += collision_stack.shape.size.y / 2
+		activation_progress.custom_minimum_size = Vector2(cards[0].get_size().x, DataManager.card_header_size)
 		return
 	align_ordering()
 	change_collision()
@@ -62,8 +66,10 @@ func calculate():
 		DataManager.CardType.LOCATION:
 			location_card = cards[0]
 			is_can_digg = check_possible_digging(location_card)
-			if is_can_digg:
+			if is_can_digg and not location_card.is_digg_in_progress:
 				start_digging()
+			elif is_can_digg and location_card.is_digg_in_progress:
+				continue_digging()
 
 
 func check_possible_digging(card : Card):
@@ -120,16 +126,20 @@ func stop_production():
 
 
 func start_digging():
+	activation_progress.show()
 	location_card.set_digger(cards[1])
 	location_card.digg()
 
 
 func continue_digging():
-	location_card.continue_digging()
+	activation_progress.show()
+	if location_card:
+		location_card.continue_digg()
 
 
 func stop_digging():
-	location_card.stop_digging()
+	if location_card:
+		location_card.stop_digg()
 
 
 func close_stack():
@@ -171,3 +181,7 @@ func _input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
 		is_dragging = false
 		#drop_card()
+
+
+func update_progress_bar(new_value : float):
+	activation_progress.value = new_value

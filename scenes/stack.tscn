@@ -1,11 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://k15y2y2mejvy"]
+[gd_scene load_steps=4 format=3 uid="uid://k15y2y2mejvy"]
 
 [ext_resource type="Script" uid="uid://d1eg6s3tqhq5v" path="res://scripts/other/stack.gd" id="1_tpkvb"]
+[ext_resource type="StyleBox" uid="uid://c85uuv5k61xpl" path="res://styles/bar_not_fill.tres" id="2_4rw1r"]
+[ext_resource type="StyleBox" uid="uid://dvhj56spl7rhs" path="res://styles/bar_fill_purple.tres" id="3_p7cx4"]
 
 [node name="Stack" type="Area2D"]
 script = ExtResource("1_tpkvb")
 
 [node name="collision_stack" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
+
+[node name="activation_progress" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+visible = false
+offset_top = -18.0
+offset_right = 80.0
+theme_override_styles/background = ExtResource("3_p7cx4")
+theme_override_styles/fill = ExtResource("2_4rw1r")
+value = 15.0
+show_percentage = false
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]

@@ -9,7 +9,7 @@
 bg_color = Color(0.1254902, 0.18039216, 0.21568628, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kg30u"]
-size = Vector2(80, 110)
+size = Vector2(90, 110)
 
 [sub_resource type="Animation" id="Animation_sy11y"]
 length = 0.001
@@ -69,7 +69,7 @@ script = ExtResource("1_d81rb")
 stack_scene = ExtResource("2_sy11y")
 
 [node name="panel_back" type="PanelContainer" parent="."]
-custom_minimum_size = Vector2(80, 110)
+custom_minimum_size = Vector2(90, 130)
 offset_right = 40.0
 offset_bottom = 40.0
 size_flags_vertical = 0
@@ -96,7 +96,14 @@ size_flags_vertical = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_kg30u")
 
-[node name="label_header" type="Label" parent="panel_back/container_content/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="panel_back/container_content/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="label_header" type="Label" parent="panel_back/container_content/PanelContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "SOME HEAD"
@@ -112,7 +119,7 @@ stretch_mode = 3
 
 [node name="collision_card" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(40, 55)
+position = Vector2(45, 55)
 shape = SubResource("RectangleShape2D_kg30u")
 
 [node name="anim_card" type="AnimationPlayer" parent="."]
@@ -128,4 +135,6 @@ wait_time = 5.0
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_area_exited"]
 [connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="animation_finished" from="anim_card" to="." method="_on_anim_card_animation_finished"]

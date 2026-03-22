@@ -11,7 +11,7 @@ class_name CardLocation
 @export var digg_speed : float = 5
 @export var res_count : int = 5
 @export var digger : Card
-@export var digg_in_process : bool
+@export var is_digg_in_progress : bool
 
 
 func initialize():
@@ -30,6 +30,11 @@ func initialize():
 	rect_main_img.texture = card_texture
 
 
+func _process(delta: float) -> void:
+	if stack:
+		stack.update_progress_bar(activate_timer.wait_time - activate_timer.time_left)
+
+
 func set_digger(new_digger : CardActorMonster):
 	digger = new_digger
 	check_digger_type()
@@ -42,8 +47,9 @@ func check_digger_type():
 
 
 func digg():
+	stack.activation_progress.max_value = activate_timer.wait_time
 	activate_timer.start()
-	digg_in_process = true
+	is_digg_in_progress = true
 
 
 func stop_digg():
@@ -51,13 +57,13 @@ func stop_digg():
 
 
 func continue_digg():
+	stack.activation_progress.max_value = activate_timer.wait_time
 	activate_timer.paused = false
 
 
 func _on_activate_timer_timeout() -> void:
 	res_count -= 1
 	get_loot()
-	digg_in_process = false
 	print('digg done ' + str(res_count))
 	if res_count == 0:
 		activate_timer.stop()
