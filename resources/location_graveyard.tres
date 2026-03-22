@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="LocationRes" load_steps=4 format=3 uid="uid://bde2idpoq2fwl"]
+
+[ext_resource type="Script" uid="uid://ycs334vjj71c" path="res://resources/res_scripts/location_res.gd" id="1_132ef"]
+[ext_resource type="Texture2D" uid="uid://d6luferd7r3b" path="res://img/l_graveyard.png" id="1_sai12"]
+[ext_resource type="Resource" uid="uid://cbj4yukob8swh" path="res://resources/monster_grandpa.tres" id="2_g1t34"]
+
+[resource]
+script = ExtResource("1_132ef")
+loot_pool = Array[Resource]([ExtResource("2_g1t34"), ExtResource("2_g1t34"), ExtResource("2_g1t34")])
+card_name = "Кладбище"
+card_desc = "Можно раскопать разные интересности. Перетащите юнита, чтобы начать вандализм "
+activate_speed = 5.0
+use_count = 3
+card_texture = ExtResource("1_sai12")
+card_type = 1
+metadata/_custom_type_script = "uid://ycs334vjj71c"

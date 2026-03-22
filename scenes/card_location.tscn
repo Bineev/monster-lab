@@ -7,9 +7,9 @@
 script = ExtResource("2_uo0cj")
 location_res = null
 location_type = 0
-location_grade = 0
 location_name = ""
 location_desc = ""
+location_loot = Array[Resource]([])
 digg_speed = 5.0
 res_count = 5
 digg_in_process = false

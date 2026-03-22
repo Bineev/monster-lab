@@ -13,6 +13,7 @@ class_name Card
 @export var offset : Vector2 = Vector2.ZERO
 @export var prev_z_index : int
 @export var card_type : DataManager.CardType
+@export var card_grade : DataManager.EntityGrade
 @export var production_type : DataManager.ProductionType
 @export var card_texture : Texture2D
 
@@ -146,9 +147,12 @@ func _on_anim_card_animation_finished(anim_name: StringName) -> void:
 		#position += event.relative
 
 func _on_input_event(_viewport, event, _shape_idx):
+	if GameManager.is_captured:
+		return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			# Начинаем перетаскивание и запоминаем смещение мыши относительно центра
+			GameManager.is_captured = true
 			change_state(DataManager.CardState.DRAGGED)
 			is_dragging = true
 			offset = global_position - get_global_mouse_position()
@@ -157,6 +161,7 @@ func _on_input_event(_viewport, event, _shape_idx):
 			if card_state == DataManager.CardState.DRAGGED or card_state == DataManager.CardState.HOVER_STACK:
 				print(self.name + ' dropped')
 				is_dragging = false
+				GameManager.is_captured = false
 				drop_card()
 
 
@@ -168,6 +173,7 @@ func _input(event):
 	# Страховка: если кнопка мыши отпущена за пределами Area2D
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
 		is_dragging = false
+		GameManager.is_captured = false
 		#drop_card()
 
 

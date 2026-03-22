@@ -12,3 +12,9 @@ centered = false
 
 [node name="player_actors" type="Node2D" parent="."]
 unique_name_in_owner = true
+
+[node name="player_loot" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="player_locations" type="Node2D" parent="."]
+unique_name_in_owner = true

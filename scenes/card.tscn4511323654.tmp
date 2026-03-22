@@ -1,12 +1,17 @@
-[gd_scene load_steps=10 format=3 uid="uid://coec2fnqd70g0"]
+[gd_scene load_steps=11 format=3 uid="uid://coec2fnqd70g0"]
 
 [ext_resource type="Script" uid="uid://c7xcd6biaogee" path="res://scripts/other/card.gd" id="1_d81rb"]
 [ext_resource type="StyleBox" uid="uid://cwov70q3x6lmv" path="res://styles/card_back.tres" id="2_6u4wf"]
 [ext_resource type="PackedScene" uid="uid://k15y2y2mejvy" path="res://scenes/stack.tscn" id="2_sy11y"]
-[ext_resource type="LabelSettings" uid="uid://3uwccgdeeovy" path="res://styles/label_header.tres" id="4_kg30u"]
+[ext_resource type="FontFile" uid="uid://dwfd8dwou7jlu" path="res://styles/PixelifySans-VariableFont_wght.ttf" id="3_kg30u"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kg30u"]
 bg_color = Color(0.1254902, 0.18039216, 0.21568628, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_kg30u"]
+font = ExtResource("3_kg30u")
+font_size = 8
+font_color = Color(0.84313726, 0.70980394, 0.5803922, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kg30u"]
 size = Vector2(80, 110)
@@ -100,7 +105,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_kg30u")
 unique_name_in_owner = true
 layout_mode = 2
 text = "SOME HEAD"
-label_settings = ExtResource("4_kg30u")
+label_settings = SubResource("LabelSettings_kg30u")
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true

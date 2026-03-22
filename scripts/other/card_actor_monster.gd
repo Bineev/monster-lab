@@ -10,6 +10,9 @@ class_name CardActorMonster
 
 func initialize():
 	await get_tree().process_frame
+	card_type = monster_res.card_type
+	card_texture = monster_res.card_texture
+	card_grade = monster_res.card_grade
 	actor_name = monster_res.card_name
 	actor_desc = monster_res.card_desc
 	actor_health = monster_res.actor_health

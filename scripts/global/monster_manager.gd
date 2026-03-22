@@ -21,5 +21,5 @@ func create_grandpa():
 	grandpa.monster_res = grandpa_res
 	GameManager.level.player_actors.add_child(grandpa)
 	grandpa.initialize()
-	grandpa.global_position = Vector2(200, 200)
+	grandpa.global_position = Vector2(200 + randi_range(-150, 150), 200 + randi_range(-150, 150))
 	

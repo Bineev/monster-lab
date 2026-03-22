@@ -6,7 +6,7 @@ class_name Stack
 
 @export var cards : Array[Card]
 @export var production_card : Card
-@export var location_card : Card
+@export var location_card : CardLocation
 @export var is_can_product : bool
 @export var is_can_digg : bool
 @export var is_dragging : bool
@@ -120,7 +120,7 @@ func stop_production():
 
 
 func start_digging():
-	location_card.initialize(cards[1]) 
+	location_card.set_digger(cards[1])
 	location_card.digg()
 
 

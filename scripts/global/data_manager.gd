@@ -42,6 +42,12 @@ enum MonsterFamily {
 }
 
 
-var card_header_size : float = 20
+var card_header_size : float = 18
 
 var default_z_index : int = 5
+
+var chances_dict : Dictionary[EntityGrade, float] = {
+	EntityGrade.T1 : 0.1,
+	EntityGrade.T2 : 0.3,
+	EntityGrade.T3 : 1
+}
