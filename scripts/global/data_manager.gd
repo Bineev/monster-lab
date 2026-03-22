@@ -34,11 +34,11 @@ enum LocationType {
 }
 
 enum PercType {
-	DIGGER, FIGHTER
+	NONE, DIGGER, FIGHTER
 }
 
 enum MonsterFamily {
-	BONES, ANIMAL, HUMAN
+	BONES, ANIMAL, HUMAN, GHOUL
 }
 
 

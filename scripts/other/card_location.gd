@@ -8,10 +8,14 @@ class_name CardLocation
 @export var location_name : String
 @export var location_desc : String
 @export var location_loot : Array[Resource]
-@export var digg_speed : float = 5
-@export var res_count : int = 5
+@export var digg_speed : float
+@export var res_count : int
+@export var remaining_res_count : int
 @export var digger : Card
 @export var is_digg_in_progress : bool
+
+
+@onready var label_uses: Label = %label_uses
 
 
 func initialize():
@@ -28,11 +32,17 @@ func initialize():
 	
 	label_header.text = location_name
 	rect_main_img.texture = card_texture
+	remaining_res_count = res_count
+	update_res_count_ui()
 
 
 func _process(delta: float) -> void:
 	if stack:
 		stack.update_progress_bar(activate_timer.wait_time - activate_timer.time_left)
+
+
+func update_res_count_ui():
+	label_uses.text = '%s/%s' % [remaining_res_count, res_count]
 
 
 func set_digger(new_digger : CardActorMonster):
@@ -62,10 +72,11 @@ func continue_digg():
 
 
 func _on_activate_timer_timeout() -> void:
-	res_count -= 1
+	remaining_res_count -= 1
+	update_res_count_ui()
 	get_loot()
-	print('digg done ' + str(res_count))
-	if res_count == 0:
+	print('digg done ' + str(remaining_res_count))
+	if remaining_res_count == 0:
 		activate_timer.stop()
 		destroy()
 
@@ -88,7 +99,7 @@ func get_loot():
 	elif rand <= DataManager.chances_dict[DataManager.EntityGrade.T2]:
 		loot_res = location_loot[1]
 	elif rand <= DataManager.chances_dict[DataManager.EntityGrade.T3]:
-		loot_res = location_loot[2]
+		loot_res = location_loot.slice(2).pick_random()
 	var loot_scene : PackedScene = EntityManager.create_entity_scene(loot_res)
 	var loot : Card = loot_scene.instantiate()
 	GameManager.level.player_loot.add_child(loot)

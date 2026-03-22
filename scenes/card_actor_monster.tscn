@@ -10,12 +10,5 @@ monster_res = null
 monster_perc = 0
 monster_parts = Array[ExtResource("3_rkygk")]([])
 
-[node name="label_header" parent="panel_back/container_content/PanelContainer" index="0"]
-unique_name_in_owner = true
-text = "SOME HEAD"
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
-
 [node name="HBoxContainer" parent="panel_back/container_content/MarginContainer" index="0"]
 size_flags_horizontal = 4

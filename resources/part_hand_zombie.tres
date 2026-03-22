@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PartRes" load_steps=3 format=3 uid="uid://cxwlimbpjwu6d"]
+
+[ext_resource type="Script" uid="uid://bll44gw1l0di2" path="res://resources/res_scripts/part_res.gd" id="1_kanbw"]
+[ext_resource type="Texture2D" uid="uid://tbhn1ichihn4" path="res://img/p_hand_zombie.png" id="1_yi7cf"]
+
+[resource]
+script = ExtResource("1_kanbw")
+part_family = 3
+actor_health = "2"
+actor_damage = "2"
+card_name = "рука зомби"
+card_desc = "Чесаться неудобно, в остальном неплохо"
+card_texture = ExtResource("1_yi7cf")
+card_type = 2
+metadata/_custom_type_script = "uid://bll44gw1l0di2"

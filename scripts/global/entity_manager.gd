@@ -2,6 +2,7 @@ extends Node
 
 var location_scene : PackedScene = load("res://scenes/card_location.tscn")
 var monster_scene : PackedScene = load("res://scenes/card_actor_monster.tscn")
+var part_scene : PackedScene = load("res://scenes/card_actor_part.tscn")
 
 
 func create_entity_scene(res : CardRes):
@@ -17,4 +18,10 @@ func create_entity_scene(res : CardRes):
 			monster.monster_res = res
 			var scene : PackedScene = PackedScene.new()
 			scene.pack(monster)
+			return scene
+		DataManager.CardType.MONSTER_PART:
+			var part : CardActorPart = part_scene.instantiate()
+			part.part_res = res
+			var scene : PackedScene = PackedScene.new()
+			scene.pack(part)
 			return scene
