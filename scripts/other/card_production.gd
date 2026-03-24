@@ -12,6 +12,7 @@ class_name CardProduction
 @export var remaining_product_count : int
 @export var is_product_in_progress : bool
 @export var parts : Array[CardActorPart]
+@export var monsters : Array[CardActorMonster]
 
 
 @onready var label_uses: Label = %label_uses
@@ -25,6 +26,7 @@ func initialize():
 	production_name = production_res.card_name
 	production_desc = production_res.card_desc
 	product_speed = production_res.activate_speed
+	production_type = production_res.production_type
 	product_count = production_res.use_count
 	activate_timer.wait_time = product_speed
 	
@@ -74,11 +76,27 @@ func set_parts(new_parts : Array[CardActorPart]):
 	parts = new_parts
 
 
+func set_monsters(new_monsters : Array[CardActorMonster]):
+	monsters = new_monsters
+
+
 func destroy():
-	for part in parts:
-		part.queue_free()
-	if stack and is_instance_valid(stack):
-		stack.remove_card(self)
+	match production_type:
+		DataManager.ProductionType.PART_CREATOR:
+			for part in parts:
+				stack.remove_card(part)
+				part.queue_free()
+			parts.clear()
+		DataManager.ProductionType.MONSTER_CREATOR:
+			for monster in monsters:
+				monster.is_can_love = false
+				stack.remove_card(monster)
+				monster.queue_free()
+			monsters.clear()
+	stack.production_card = null
+	#if stack and is_instance_valid(stack):
+		#stack.remove_card(self)
+	is_product_in_progress = false
 
 
 func create():
@@ -95,4 +113,11 @@ func create():
 			monster.initialize()
 			var pos : Vector2 = global_position + Vector2(randi_range(80, 100), randi_range(80, 100)) if randf() < 0.5 else global_position + Vector2(randi_range(-80, -100), randi_range(-80, -100))
 			monster.global_position += pos 
-	
+		DataManager.ProductionType.MONSTER_CREATOR:
+			var monster_res : MonsterRes = MonsterManager.create_monster_by_monsters(monsters)
+			var monster_scene : PackedScene = EntityManager.create_entity_scene(monster_res)
+			var monster : CardActorMonster = monster_scene.instantiate()
+			GameManager.level.player_actors.add_child(monster)
+			monster.initialize()
+			var pos : Vector2 = global_position + Vector2(randi_range(80, 100), randi_range(80, 100)) if randf() < 0.5 else global_position + Vector2(randi_range(-80, -100), randi_range(-80, -100))
+			monster.global_position += pos 

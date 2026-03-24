@@ -3,6 +3,7 @@ extends Node
 
 @export var production_scene : PackedScene = preload("res://scenes/card_production.tscn")
 @export var stapler_res : ProductionRes = preload("res://resources/production_stapler.tres")
+@export var motel_res : ProductionRes = preload("res://resources/production_motel.tres")
 
 
 func create_random_production():
@@ -19,3 +20,11 @@ func create_stapler():
 	GameManager.level.player_locations.add_child(stapler)
 	stapler.initialize()
 	stapler.global_position = Vector2(600 + randi_range(-150, 150), 600 + randi_range(-150, 150))
+
+
+func create_motel():
+	var motel : CardProduction = production_scene.instantiate()
+	motel.production_res = motel_res
+	GameManager.level.player_locations.add_child(motel)
+	motel.initialize()
+	motel.global_position = Vector2(600 + randi_range(-150, 150), 600 + randi_range(-150, 150))

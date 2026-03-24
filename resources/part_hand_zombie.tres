@@ -6,8 +6,8 @@
 [resource]
 script = ExtResource("1_kanbw")
 part_family = 3
-actor_health = "2"
-actor_damage = "2"
+actor_health = 3
+actor_damage = 3
 card_name = "рука зомби"
 card_desc = "Чесаться неудобно, в остальном неплохо"
 card_texture = ExtResource("1_yi7cf")

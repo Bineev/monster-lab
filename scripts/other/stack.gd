@@ -153,7 +153,12 @@ func check_possible_production(card : Card):
 				return true
 			return false
 		DataManager.ProductionType.MONSTER_CREATOR:
-			pass
+			if content_cards.size() != DataManager.monster_love_size:
+				return false
+			for content_card in content_cards:
+				if content_card.card_type != DataManager.CardType.MONSTER:
+					return false
+			return true
 		DataManager.ProductionType.MONSTER_MERGER:
 			pass
 		DataManager.ProductionType.RES_CREATOR:
@@ -162,9 +167,16 @@ func check_possible_production(card : Card):
 
 func start_production():
 	if production_card and not production_card.is_product_in_progress:
-		parts[parts.size() - 1].input_pickable = false
 		activation_progress.show()
-		production_card.set_parts(parts)
+		cards[cards.size() - 1].input_pickable = false
+		match production_card.production_type:
+			DataManager.ProductionType.PART_CREATOR:
+				production_card.set_parts(parts)
+			DataManager.ProductionType.MONSTER_CREATOR:
+				var monster_cards : Array[CardActorMonster]
+				for card in cards.slice(1):
+					monster_cards.append(card)
+				production_card.set_monsters(monster_cards)
 		production_card.product()
 
 

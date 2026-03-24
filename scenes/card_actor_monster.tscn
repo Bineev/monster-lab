@@ -9,6 +9,7 @@ script = ExtResource("2_87efw")
 monster_res = null
 monster_perc = 0
 monster_parts = Array[ExtResource("3_rkygk")]([])
+is_can_love = true
 
 [node name="rect_main_img" parent="panel_back/container_content" index="1"]
 custom_minimum_size = Vector2(64, 64)

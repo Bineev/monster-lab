@@ -56,6 +56,47 @@ func create_monster_by_parts(parts : Array[PartRes]):
 	return new_res
 
 
+func create_monster_by_monsters(monsters : Array[CardActorMonster]):
+	var perc : DataManager.PercType
+	monsters.shuffle()
+	for monster in monsters:
+		if monster.monster_perc != DataManager.PercType.NONE:
+			perc = monster.monster_perc
+			break
+	var aggregate_parts : Array[PartRes]
+	for monster in monsters:
+		aggregate_parts.append_array(monster.monster_parts)
+	aggregate_parts.shuffle()
+	var final_part_reses : Array[PartRes]
+	var body_res : PartRes
+	var hand_res : PartRes
+	var foot_res : PartRes
+	var head_res : PartRes
+	var is_already_has_body : bool
+	var is_already_has_hand : bool
+	var is_already_has_foot : bool
+	var is_already_has_head : bool
+	for part in aggregate_parts:
+		if part.part_type == DataManager.MonsterPartType.BODY:
+			if not is_already_has_body:
+				final_part_reses.append(part)
+				is_already_has_body = true
+		elif part.part_type == DataManager.MonsterPartType.HAND:
+			if not is_already_has_hand:
+				final_part_reses.append(part)
+				is_already_has_hand = true
+		elif part.part_type == DataManager.MonsterPartType.FOOT:
+			if not is_already_has_foot:
+				final_part_reses.append(part)
+				is_already_has_foot = true
+		elif part.part_type == DataManager.MonsterPartType.HEAD:
+			if not is_already_has_head:
+				final_part_reses.append(part)
+				is_already_has_head = true
+	var monster_res : MonsterRes = create_monster_by_parts(final_part_reses)
+	return monster_res
+
+
 func create_grandpa():
 	var grandpa : CardActorMonster = monster_scene.instantiate()
 	grandpa.monster_res = grandpa_res

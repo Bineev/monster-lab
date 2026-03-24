@@ -6,6 +6,7 @@ class_name CardActorMonster
 @export var monster_res : MonsterRes
 @export var monster_perc : DataManager.PercType
 @export var monster_parts : Array[PartRes]
+@export var is_can_love : bool = true
 
 @onready var sprite_container: Node2D = %sprite_container
 @onready var sprite_foot: Sprite2D = %sprite_foot

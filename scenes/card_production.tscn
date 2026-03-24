@@ -5,7 +5,7 @@
 [ext_resource type="LabelSettings" uid="uid://b3j50fkpgbe26" path="res://styles/label_card_damage.tres" id="3_agwqa"]
 [ext_resource type="Texture2D" uid="uid://31o05l6qch3w" path="res://img/ui_shovel.png" id="4_kjwa6"]
 
-[node name="CardProduction" node_paths=PackedStringArray("parts") instance=ExtResource("1_816sw")]
+[node name="CardProduction" node_paths=PackedStringArray("parts", "monsters") instance=ExtResource("1_816sw")]
 script = ExtResource("2_xn2ci")
 production_res = null
 production_type = 0
@@ -16,6 +16,7 @@ product_count = 0
 remaining_product_count = 0
 is_product_in_progress = false
 parts = []
+monsters = []
 
 [node name="MarginContainer" type="MarginContainer" parent="panel_back/container_content" index="2"]
 layout_mode = 2

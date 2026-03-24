@@ -48,6 +48,8 @@ var default_z_index : int = 5
 
 var parts_size : int = 4
 
+var monster_love_size : int = 2
+
 var chances_dict : Dictionary[EntityGrade, float] = {
 	EntityGrade.T1 : 0.1,
 	EntityGrade.T2 : 0.3,
