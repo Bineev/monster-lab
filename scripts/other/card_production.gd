@@ -46,6 +46,8 @@ func update_res_count_ui():
 
 
 func product():
+	activate_timer.paused = false
+	activate_timer.wait_time = product_speed
 	stack.activation_progress.max_value = activate_timer.wait_time
 	activate_timer.start()
 	is_product_in_progress = true
@@ -88,9 +90,14 @@ func destroy():
 				part.queue_free()
 			parts.clear()
 		DataManager.ProductionType.MONSTER_CREATOR:
+			var old_gp : Vector2 = global_position
 			for monster in monsters:
 				monster.is_can_love = false
 				stack.remove_card(monster)
+				print(global_position)
+				print(monster.global_position)
+				var pos : Vector2 = old_gp + Vector2(randi_range(80, 100), randi_range(80, 100)) if randf() < 0.5 else global_position + Vector2(randi_range(-80, -100), randi_range(-80, -100))
+				monster.global_position = pos 
 			monsters.clear()
 	stack.production_card = null
 	#if stack and is_instance_valid(stack):
@@ -104,7 +111,6 @@ func create():
 			var part_reses : Array[PartRes]
 			for part in parts:
 				part_reses.append(part.part_res)
-				
 			var monster_res : MonsterRes = MonsterManager.create_monster_by_parts(part_reses)
 			var monster_scene : PackedScene = EntityManager.create_entity_scene(monster_res)
 			var monster : CardActorMonster = monster_scene.instantiate()
@@ -119,4 +125,4 @@ func create():
 			GameManager.level.player_actors.add_child(monster)
 			monster.initialize()
 			var pos : Vector2 = global_position + Vector2(randi_range(80, 100), randi_range(80, 100)) if randf() < 0.5 else global_position + Vector2(randi_range(-80, -100), randi_range(-80, -100))
-			monster.global_position += pos 
+			monster.global_position = pos 

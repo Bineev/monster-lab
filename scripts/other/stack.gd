@@ -45,6 +45,8 @@ func remove_card(card : Card):
 	stop_digging()
 	cards.erase(card)
 	card.reparent(GameManager.level)
+	if card.card_state != DataManager.CardState.DRAGGED:
+		card.change_state(DataManager.CardState.ON_FIELD)
 	if cards.size() < 2:
 		close_stack()
 	else:
@@ -66,8 +68,10 @@ func calculate():
 		DataManager.CardType.PRODUCTION:
 			production_card = cards[0]
 			is_can_product = check_possible_production(production_card)
-			if is_can_product:
+			if is_can_product and not production_card.is_product_in_progress:
 				start_production()
+			elif is_can_product and production_card.is_product_in_progress:
+				continue_production()
 		DataManager.CardType.LOCATION:
 			location_card = cards[0]
 			is_can_digg = check_possible_digging(location_card)
@@ -158,6 +162,9 @@ func check_possible_production(card : Card):
 			for content_card in content_cards:
 				if content_card.card_type != DataManager.CardType.MONSTER:
 					return false
+				else:
+					if not content_card.is_can_love:
+						return false
 			return true
 		DataManager.ProductionType.MONSTER_MERGER:
 			pass
@@ -168,7 +175,9 @@ func check_possible_production(card : Card):
 func start_production():
 	if production_card and not production_card.is_product_in_progress:
 		activation_progress.show()
-		cards[cards.size() - 1].input_pickable = false
+		# раскоментировать, если хотим, чтобы карту нельзя было снять
+		#cards[cards.size() - 1].input_pickable = false
+		#cards[cards.size() - 1].change_collision_to_invisible_state()
 		match production_card.production_type:
 			DataManager.ProductionType.PART_CREATOR:
 				production_card.set_parts(parts)
@@ -181,9 +190,15 @@ func start_production():
 
 
 func stop_production():
-	pass
-	#if production_card:
-		#production_card.stop_product()
+	if production_card and production_card.is_product_in_progress:
+		production_card.stop_product()
+
+
+func continue_production():
+	activation_progress.show()
+	if production_card:
+		production_card.continue_product()
+
 
 
 func start_digging():
@@ -199,6 +214,7 @@ func continue_digging():
 
 
 func stop_digging():
+	activation_progress.hide()
 	if location_card:
 		location_card.stop_digg()
 

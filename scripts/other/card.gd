@@ -35,11 +35,13 @@ func change_state(new_state : DataManager.CardState):
 			anim_card.play('appears')
 		DataManager.CardState.ON_FIELD:
 			change_collision_to_stacked_state()
+			input_pickable = true
 		DataManager.CardState.DRAGGED:
 			if prev_state == DataManager.CardState.IN_STACK and not (stack and stack.is_dragging):
-				stack.remove_card(self)
-				#stack.calculate()
-				is_in_stack = false
+				if stack and is_instance_valid(stack):
+					stack.remove_card(self)
+					#stack.calculate()
+					is_in_stack = false
 			change_collision_to_dragged_state()
 			z_index = 100
 		DataManager.CardState.HOVER_STACK:
@@ -171,9 +173,10 @@ func _input(event):
 	
 	# Страховка: если кнопка мыши отпущена за пределами Area2D
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
-		is_dragging = false
-		GameManager.is_captured = false
-		#drop_card()
+		if card_state == DataManager.CardState.DRAGGED or card_state == DataManager.CardState.HOVER_STACK:
+			is_dragging = false
+			GameManager.is_captured = false
+			#drop_card()
 
 
 func create_stack():
