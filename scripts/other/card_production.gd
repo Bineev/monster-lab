@@ -91,7 +91,6 @@ func destroy():
 			for monster in monsters:
 				monster.is_can_love = false
 				stack.remove_card(monster)
-				monster.queue_free()
 			monsters.clear()
 	stack.production_card = null
 	#if stack and is_instance_valid(stack):

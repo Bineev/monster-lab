@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="PartRes" load_steps=3 format=3 uid="uid://ch1kuda2hjwk0"]
 
-[ext_resource type="Texture2D" uid="uid://tbhn1ichihn4" path="res://img/p_hand_zombie.png" id="1_lvf3r"]
+[ext_resource type="Texture2D" uid="uid://dq8s25is41u43" path="res://img/p_foot_zombie.png" id="1_lvf3r"]
 [ext_resource type="Script" uid="uid://bll44gw1l0di2" path="res://resources/res_scripts/part_res.gd" id="2_xfclp"]
 
 [resource]
