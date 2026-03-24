@@ -2,15 +2,15 @@
 
 [ext_resource type="Script" uid="uid://ycs334vjj71c" path="res://resources/res_scripts/location_res.gd" id="1_132ef"]
 [ext_resource type="Texture2D" uid="uid://d6luferd7r3b" path="res://img/l_graveyard.png" id="1_sai12"]
-[ext_resource type="Resource" uid="uid://cbj4yukob8swh" path="res://resources/monster_grandpa.tres" id="2_g1t34"]
 [ext_resource type="Resource" uid="uid://4tfjyvnnk6vd" path="res://resources/part_body_zobmie.tres" id="3_uyrmc"]
 [ext_resource type="Resource" uid="uid://ch1kuda2hjwk0" path="res://resources/part_foot_zombie.tres" id="4_mulg0"]
-[ext_resource type="Resource" uid="uid://cxwlimbpjwu6d" path="res://resources/part_hand_zombie.tres" id="5_qk7mj"]
+[ext_resource type="Resource" uid="uid://cxwlimbpjwu6d" path="res://resources/part_rhand_zombie.tres" id="5_qk7mj"]
 [ext_resource type="Resource" uid="uid://dcnhq6nhduh47" path="res://resources/part_head_zombie.tres" id="6_5vv2x"]
+[ext_resource type="Resource" uid="uid://bwyamvcsk4xdo" path="res://resources/part_lhand_zombie.tres" id="6_uyrmc"]
 
 [resource]
 script = ExtResource("1_132ef")
-loot_pool = Array[Resource]([ExtResource("2_g1t34"), ExtResource("3_uyrmc"), ExtResource("4_mulg0"), ExtResource("5_qk7mj"), ExtResource("6_5vv2x")])
+loot_pool = Array[Resource]([ExtResource("3_uyrmc"), ExtResource("4_mulg0"), ExtResource("5_qk7mj"), ExtResource("6_5vv2x"), ExtResource("6_uyrmc")])
 card_name = "Кладбище"
 card_desc = "Можно раскопать разные интересности. Перетащите юнита, чтобы начать вандализм "
 activate_speed = 5.0

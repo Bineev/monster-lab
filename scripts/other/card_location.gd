@@ -97,15 +97,17 @@ func get_loot():
 		return
 	var rand : float = randf()
 	var loot_res : Resource
-	if rand <= DataManager.chances_dict[DataManager.EntityGrade.T1]:
-		loot_res = location_loot[0]
-	elif rand <= DataManager.chances_dict[DataManager.EntityGrade.T2]:
-		loot_res = location_loot[1]
-	elif rand <= DataManager.chances_dict[DataManager.EntityGrade.T3]:
-		loot_res = location_loot.slice(2).pick_random()
+	#if rand <= DataManager.chances_dict[DataManager.EntityGrade.T1]:
+		#loot_res = location_loot[0]
+	#elif rand <= DataManager.chances_dict[DataManager.EntityGrade.T2]:
+		#loot_res = location_loot[1]
+	#elif rand <= DataManager.chances_dict[DataManager.EntityGrade.T3]:
+		#loot_res = location_loot.slice(2).pick_random()
+	loot_res = location_loot.pick_random()
 	var loot_scene : PackedScene = EntityManager.create_entity_scene(loot_res)
 	var loot : Card = loot_scene.instantiate()
 	GameManager.level.player_loot.add_child(loot)
 	loot.initialize()
 	var pos : Vector2 = global_position + Vector2(randi_range(80, 100), randi_range(80, 100)) if randf() < 0.5 else global_position + Vector2(randi_range(-80, -100), randi_range(-80, -100))
 	loot.global_position += pos 
+	loot.change_state(DataManager.CardState.ON_FIELD)

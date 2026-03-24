@@ -6,7 +6,6 @@
 [resource]
 script = ExtResource("1_oprjj")
 part_family = 3
-part_type = 1
 actor_health = 1
 card_name = "башка зомби"
 card_desc = "Слишком много смотрел рилсы"

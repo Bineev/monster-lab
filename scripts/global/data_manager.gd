@@ -14,7 +14,7 @@ enum OwnerType {
 }
 
 enum MonsterPartType {
-	HAND, HEAD, FOOT, BODY, TAIL
+	HEAD, RHAND, FOOT, BODY, LHAND
 }
 
 enum EntityGrade {
@@ -46,7 +46,7 @@ var card_header_size : float = 18
 
 var default_z_index : int = 5
 
-var parts_size : int = 4
+var parts_size : int = 5
 
 var monster_love_size : int = 2
 

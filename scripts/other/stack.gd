@@ -129,11 +129,19 @@ func check_possible_production(card : Card):
 									is_already_has_part = true
 							if not is_already_has_part:
 								parts.append(content_card)
-						DataManager.MonsterPartType.HAND:
+						DataManager.MonsterPartType.LHAND:
 							has_hand = true
 							var is_already_has_part : bool
 							for part in parts:
-								if part.part_type == DataManager.MonsterPartType.HAND:
+								if part.part_type == DataManager.MonsterPartType.LHAND:
+									is_already_has_part = true
+							if not is_already_has_part:
+								parts.append(content_card)
+						DataManager.MonsterPartType.RHAND:
+							has_hand = true
+							var is_already_has_part : bool
+							for part in parts:
+								if part.part_type == DataManager.MonsterPartType.RHAND:
 									is_already_has_part = true
 							if not is_already_has_part:
 								parts.append(content_card)
@@ -153,7 +161,7 @@ func check_possible_production(card : Card):
 									is_already_has_part = true
 							if not is_already_has_part:
 								parts.append(content_card)
-			if parts.size() == 4:
+			if parts.size() == DataManager.parts_size:
 				return true
 			return false
 		DataManager.ProductionType.MONSTER_CREATOR:

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PartRes" load_steps=3 format=3 uid="uid://bwyamvcsk4xdo"]
+
+[ext_resource type="Texture2D" uid="uid://tbhn1ichihn4" path="res://img/p_hand_zombie.png" id="1_666oy"]
+[ext_resource type="Script" uid="uid://bll44gw1l0di2" path="res://resources/res_scripts/part_res.gd" id="1_uc1w4"]
+
+[resource]
+script = ExtResource("1_uc1w4")
+part_family = 3
+part_type = 4
+actor_health = 2
+actor_damage = 2
+card_name = "левая рука зомби"
+card_desc = "слабее чем правая"
+card_texture = ExtResource("1_666oy")
+card_type = 2
+metadata/_custom_type_script = "uid://bll44gw1l0di2"

@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_kanbw")
 part_family = 3
+part_type = 1
 actor_health = 3
 actor_damage = 3
 card_name = "рука зомби"

@@ -9,10 +9,12 @@ class_name CardActorMonster
 @export var is_can_love : bool = true
 
 @onready var sprite_container: Node2D = %sprite_container
+@onready var sprite_rhand: Sprite2D = %sprite_rhand
 @onready var sprite_foot: Sprite2D = %sprite_foot
 @onready var sprite_body: Sprite2D = %sprite_body
-@onready var sprite_hand: Sprite2D = %sprite_hand
+@onready var sprite_lhand: Sprite2D = %sprite_lhand
 @onready var sprite_head: Sprite2D = %sprite_head
+
 
 
 func initialize():
@@ -37,5 +39,6 @@ func initialize():
 	# собираем монстра
 	sprite_foot.texture = monster_res.monster_foot_texture
 	sprite_body.texture = monster_res.monster_body_texture
-	sprite_hand.texture = monster_res.monster_hand_texture
+	sprite_rhand.texture = monster_res.monster_rhand_texture
 	sprite_head.texture = monster_res.monster_head_texture
+	sprite_lhand.texture = monster_res.monster_lhand_texture
