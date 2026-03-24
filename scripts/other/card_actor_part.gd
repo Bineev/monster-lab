@@ -20,6 +20,8 @@ func initialize():
 	card_texture = part_res.card_texture
 	part_perc = part_res.part_perc
 	part_type = part_res.part_type
+	panel_back.tooltip_text = actor_desc
+	setup_tooltip()
 	
 	label_header.text = actor_name
 	rect_main_img.texture = card_texture

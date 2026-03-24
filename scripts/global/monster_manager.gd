@@ -35,6 +35,7 @@ func create_grade_up_part(parts : Array[PartRes]):
 	var part_family : DataManager.MonsterFamily = parts.pick_random().part_family
 	var part_type : DataManager.MonsterPartType = parts.pick_random().part_type
 	var part_res : PartRes = create_part_by_family_and_grade_and_type(part_family, part_grade, part_type)
+	return part_res
 
 
 func create_monster_by_parts(parts : Array[PartRes]):

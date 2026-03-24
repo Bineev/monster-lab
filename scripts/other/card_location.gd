@@ -29,11 +29,14 @@ func initialize():
 	res_count = location_res.use_count
 	location_loot = location_res.loot_pool
 	activate_timer.wait_time = digg_speed
+	panel_back.tooltip_text = location_desc
+	setup_tooltip()
 	
 	label_header.text = location_name
 	rect_main_img.texture = card_texture
 	remaining_res_count = res_count
 	update_res_count_ui()
+
 
 
 func _process(delta: float) -> void:

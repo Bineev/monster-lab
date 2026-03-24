@@ -29,6 +29,8 @@ func initialize():
 	production_type = production_res.production_type
 	product_count = production_res.use_count
 	activate_timer.wait_time = product_speed
+	panel_back.tooltip_text = production_desc
+	setup_tooltip()
 	
 	label_header.text = production_name
 	rect_main_img.texture = card_texture
@@ -99,6 +101,11 @@ func destroy():
 				var pos : Vector2 = old_gp + Vector2(randi_range(80, 100), randi_range(80, 100)) if randf() < 0.5 else global_position + Vector2(randi_range(-80, -100), randi_range(-80, -100))
 				monster.global_position = pos 
 			monsters.clear()
+		DataManager.ProductionType.PART_MERGER:
+			for part in parts:
+				stack.remove_card(part)
+				part.queue_free()
+			parts.clear()
 	stack.production_card = null
 	#if stack and is_instance_valid(stack):
 		#stack.remove_card(self)

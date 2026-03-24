@@ -15,16 +15,31 @@ class_name Card
 @export var card_type : DataManager.CardType
 @export var card_grade : DataManager.EntityGrade
 @export var card_texture : Texture2D
+@export var stylebox_tooltip : StyleBoxFlat = preload('res://styles/card_back.tres')
+@export var font_tooltip : Font = preload('res://styles/DigitalPixelV124-Regular.otf')
 
 @onready var collision_card: CollisionShape2D = %collision_card
 @onready var anim_card: AnimationPlayer = %anim_card
 @onready var activate_timer: Timer = %activate_timer
 @onready var rect_main_img: TextureRect = %rect_main_img
 @onready var label_header: Label = %label_header
+@onready var panel_back: PanelContainer = %panel_back
 
 
 func _ready() -> void:
 	change_state(DataManager.CardState.APPEARS)
+
+
+func setup_tooltip():
+		var new_theme = Theme.new()
+		var sb = stylebox_tooltip.duplicate()
+		sb.set_content_margin_all(10)
+		new_theme.set_stylebox('panel', 'TooltipPanel', sb)
+		new_theme.set_font('font', 'TooltipLabel', font_tooltip)
+		new_theme.set_font_size('font_size', 'TooltipLabel', 8)
+		new_theme.set_color('font_color', 'TooltipLabel', Color8(52, 28, 39, 255))
+		#var stylebox = new_theme.get_theme_stylebox('normal')
+		panel_back.theme = new_theme
 
 
 func change_state(new_state : DataManager.CardState):

@@ -21,6 +21,9 @@ unique_name_in_owner = true
 [node name="player_locations" type="Node2D" parent="."]
 unique_name_in_owner = true
 
+[node name="player_productions" type="Node2D" parent="."]
+unique_name_in_owner = true
+
 [node name="ShaderLayer" parent="." instance=ExtResource("3_w8frs")]
 
 [node name="Camera2D" type="Camera2D" parent="."]

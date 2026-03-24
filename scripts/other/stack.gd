@@ -170,6 +170,17 @@ func check_possible_production(card : Card):
 			pass
 		DataManager.ProductionType.RES_CREATOR:
 			pass
+		DataManager.ProductionType.PART_MERGER:
+			if content_cards.size() != DataManager.parts_merger_count:
+				return false
+			var same_part_type : DataManager.MonsterPartType = content_cards[0].part_type
+			for content_card in content_cards:
+				if content_card.card_type != DataManager.CardType.MONSTER_PART:
+					return false
+				else:
+					if same_part_type != content_card.part_type:
+						return false
+			return true
 
 
 func start_production():
@@ -186,6 +197,11 @@ func start_production():
 				for card in cards.slice(1):
 					monster_cards.append(card)
 				production_card.set_monsters(monster_cards)
+			DataManager.ProductionType.PART_MERGER:
+				for card in cards.slice(1):
+					var part : CardActorPart = card
+					parts.append(part)
+				production_card.set_parts(parts)
 		production_card.product()
 
 

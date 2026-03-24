@@ -9,7 +9,7 @@
 bg_color = Color(0.1254902, 0.18039216, 0.21568628, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kg30u"]
-size = Vector2(90, 110)
+size = Vector2(90, 130)
 
 [sub_resource type="Animation" id="Animation_sy11y"]
 length = 0.001
@@ -69,6 +69,7 @@ script = ExtResource("1_d81rb")
 stack_scene = ExtResource("2_sy11y")
 
 [node name="panel_back" type="PanelContainer" parent="."]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(90, 130)
 offset_right = 40.0
 offset_bottom = 40.0
@@ -119,7 +120,7 @@ stretch_mode = 3
 
 [node name="collision_card" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(45, 55)
+position = Vector2(45, 65)
 shape = SubResource("RectangleShape2D_kg30u")
 
 [node name="anim_card" type="AnimationPlayer" parent="."]
