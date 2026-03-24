@@ -3,13 +3,38 @@ extends Node
 @export var monster_scene : PackedScene = preload("res://scenes/card_actor_monster.tscn")
 @export var grandpa_res : MonsterRes = preload("res://resources/monster_grandpa.tres")
 
+@export var ghoul_part_reses : Array[PartRes] = [
+	preload("res://resources/part_body_zobmie.tres"),
+	preload("res://resources/part_hand_zombie.tres"),
+	preload("res://resources/part_foot_zombie.tres"),
+	preload("res://resources/part_head_zombie.tres"),
+]
 
 func create_random_monster():
 	pass
 
 
-func create_monster_by_family_and_grade():
-	pass
+func create_part_by_family_and_grade_and_type(part_family : DataManager.MonsterFamily, part_grade : DataManager.EntityGrade, part_type : DataManager.MonsterPartType):
+	var parts_pool : Array[PartRes]
+	match part_family:
+		DataManager.MonsterFamily.GHOUL:
+			parts_pool = ghoul_part_reses
+	var new_part : PartRes
+	for part in parts_pool:
+		if part.part_type == part_type:
+			new_part = part.duplicate(true)
+	if part_grade < DataManager.max_grade:
+		new_part.card_grade = part_grade + 1
+	return new_part
+
+
+func create_grade_up_part(parts : Array[PartRes]):
+	if parts.size() < DataManager.parts_merger_count:
+		return
+	var part_grade : DataManager.EntityGrade = parts.pick_random().card_grade
+	var part_family : DataManager.MonsterFamily = parts.pick_random().part_family
+	var part_type : DataManager.MonsterPartType = parts.pick_random().part_type
+	var part_res : PartRes = create_part_by_family_and_grade_and_type(part_family, part_grade, part_type)
 
 
 func create_monster_by_parts(parts : Array[PartRes]):

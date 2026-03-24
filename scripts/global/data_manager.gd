@@ -26,7 +26,7 @@ enum GeneType {
 }
 
 enum ProductionType {
-	PART_CREATOR, RES_CREATOR, MONSTER_CREATOR, MONSTER_MERGER
+	PART_CREATOR, RES_CREATOR, MONSTER_CREATOR, MONSTER_MERGER, PART_MIXER, PART_MERGER
 }
 
 enum LocationType {
@@ -49,6 +49,10 @@ var default_z_index : int = 5
 var parts_size : int = 4
 
 var monster_love_size : int = 2
+
+var parts_merger_count : int = 5
+
+var max_grade : int = 2
 
 var chances_dict : Dictionary[EntityGrade, float] = {
 	EntityGrade.T1 : 0.1,
