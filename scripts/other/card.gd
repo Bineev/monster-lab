@@ -229,10 +229,11 @@ func get_size():
 
 func _on_mouse_entered() -> void:
 	if card_state == DataManager.CardState.ON_FIELD:
-		var tween : Tween = create_tween()
+		var tween : Tween = create_tween().set_parallel()
 		tween.tween_property(self, "scale",  Vector2(1.05, 1.05), 0.1)
+		#tween.tween_callback(_on_mouse_exited).set_delay(3)
 
 
 func _on_mouse_exited() -> void:
-	var tween : Tween = create_tween()
+	var tween : Tween = create_tween().set_parallel()
 	tween.tween_property(self, "scale",  Vector2(1, 1), 0.1)

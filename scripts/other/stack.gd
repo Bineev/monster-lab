@@ -31,6 +31,7 @@ func create_collision():
 func add_card(card : Card, is_in_start : bool = false):
 	stop_production()
 	stop_digging()
+	card.scale = Vector2(1, 1)
 	if not is_in_start:
 		cards.append(card)
 	else:
