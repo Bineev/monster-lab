@@ -17,6 +17,7 @@ class_name Card
 @export var card_texture : Texture2D
 @export var stylebox_tooltip : StyleBoxFlat = preload('res://styles/card_back.tres')
 @export var font_tooltip : Font = preload('res://styles/DigitalPixelV124-Regular.otf')
+@export var intersected_areas : Array[Card]
 
 @onready var collision_card: CollisionShape2D = %collision_card
 @onready var anim_card: AnimationPlayer = %anim_card
@@ -62,17 +63,29 @@ func change_state(new_state : DataManager.CardState):
 		DataManager.CardState.HOVER_STACK:
 			pass
 		DataManager.CardState.ENTER_STACK:
+			if prev_state == DataManager.CardState.HOVER_STACK:
+				intersected_card = get_closest_card(intersected_areas)
+				stack = intersected_card.stack
 			change_collision_to_stacked_state()
 			enter_to_stack()
 		DataManager.CardState.IN_STACK:
 			is_in_stack = true
+			change_collision_to_invisible_state()
 			stack.calculate()
-			intersected_card = null
 		DataManager.CardState.EXIT_STACK:
 			pass
 		DataManager.CardState.DESTROYED:
 			pass
 	print(DataManager.CardState.keys()[card_state] + ' ' + self.name)
+
+
+func get_closest_card(cards : Array[Card]):
+	if cards.size() == 0:
+		return null
+	if cards.size() == 1:
+		return cards[0]
+	cards.sort_custom(func(a: Card, b: Card): return global_position.distance_to(a.global_position) < global_position.distance_to(b.global_position))
+	return cards[0]
 
 
 func drop_card():
@@ -85,22 +98,27 @@ func drop_card():
 
 func _on_area_entered(area: Area2D) -> void:
 	# здесь добавить чек на стак, если будут баги
-	if card_state == DataManager.CardState.HOVER_STACK or not card_state == DataManager.CardState.DRAGGED:
+	if card_state != DataManager.CardState.HOVER_STACK and card_state != DataManager.CardState.DRAGGED:
 		return
-	intersected_card = area
+	var card : Card = area
+	if not intersected_areas.has(card):
+		intersected_areas.append(card)
 	change_state(DataManager.CardState.HOVER_STACK)
-	if not stack:
-		stack = intersected_card.stack
+	#if not stack:
+		#stack = card.stack
 
 
 func _on_area_exited(area: Area2D) -> void:
-	if not card_state == DataManager.CardState.HOVER_STACK or card_state == DataManager.CardState.DRAGGED:
+	if card_state == DataManager.CardState.ENTER_STACK:
 		return
-	intersected_card = area
+	var card : Card = area
+	if intersected_areas.has(card):
+		intersected_areas.erase(card)
 	# здесь ошибка
 	if not is_in_stack:
 		stack = null
-	change_state(DataManager.CardState.DRAGGED)
+	if intersected_areas.size() == 0:
+		change_state(DataManager.CardState.DRAGGED)
 
 
 func make_card_stacked():
@@ -134,7 +152,6 @@ func enter_to_stack():
 		create_stack()
 	else:
 		stack.add_card(self)
-		intersected_card = null
 
 
 func _on_anim_card_animation_finished(anim_name: StringName) -> void:
@@ -187,6 +204,7 @@ func _input(event):
 		global_position = get_global_mouse_position() + offset
 	
 	# Страховка: если кнопка мыши отпущена за пределами Area2D
+	# здесь багованная история
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
 		if card_state == DataManager.CardState.DRAGGED or card_state == DataManager.CardState.HOVER_STACK:
 			is_dragging = false
@@ -205,22 +223,18 @@ func create_stack():
 	# здесь цимес
 	intersected_card.change_state(DataManager.CardState.ENTER_STACK)
 	stack.add_card(self)
+	intersected_areas.clear()
 	intersected_card = null
 
 
 func merge_stacks():
 	# значит у нас уже стек
 	# если у карты пересечения есть стек
-	if intersected_card.stack:
-		# мерджим стеки
-		var copy_stack : Stack = stack
-		for card in stack.cards: 
-			intersected_card.stack.add_card(card)
-		copy_stack.queue_free()
-	else:
-		# если карта одиночка, то добавляем ее в свои стек
-		stack.global_position = intersected_card.global_position
-		stack.add_card(intersected_card, true)
+	var copy_stack : Stack = stack
+	for card in stack.cards: 
+		intersected_card.stack.add_card(card)
+	copy_stack.queue_free()
+
 
 
 func get_size():

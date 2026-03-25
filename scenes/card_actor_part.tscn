@@ -7,3 +7,4 @@
 script = ExtResource("2_4qxx0")
 part_res = null
 part_perc = 0
+part_type = 0

@@ -16,15 +16,32 @@ class_name Stack
 @export var has_head : bool
 @export var has_foot : bool
 @export var parts : Array[CardActorPart]
+@export var intersected_areas : Array[Card]
+@export var stack_scene : PackedScene = preload('res://scenes/stack.tscn')
 
 @onready var collision_stack: CollisionShape2D = %collision_stack
 @onready var activation_progress: ProgressBar = %activation_progress
+@onready var stack_to_card_collision: CollisionShape2D = %stack_to_card_collision
+@onready var stack_area: Area2D = %stack_area
 
 
 func create_collision():
 	#var rect_coll : CollisionShape2D = CollisionShape2D.new()
 	var shape = RectangleShape2D.new()
 	shape.size = Vector2(cards[0].get_size().x, DataManager.card_header_size)
+	return shape
+
+
+func activate_stack_to_card_collision(is_active : bool):
+	if is_active:
+		stack_area.set_collision_mask_value(2, true)
+	else:
+		stack_area.set_collision_mask_value(2, false)
+
+
+func create_stack_collision():
+	var shape = RectangleShape2D.new()
+	shape.size = Vector2(cards[0].get_size().x, (cards.size() - 1) * DataManager.card_header_size + cards[0].get_size().y)
 	return shape
 
 
@@ -45,11 +62,12 @@ func remove_card(card : Card):
 	stop_production()
 	stop_digging()
 	cards.erase(card)
+	get_tree().process_frame.connect(card.reparent.bind(GameManager.level), CONNECT_ONE_SHOT)
 	card.reparent(GameManager.level)
 	if card.card_state != DataManager.CardState.DRAGGED:
 		card.change_state(DataManager.CardState.ON_FIELD)
 	if cards.size() < 2:
-		close_stack()
+		call_deferred('close_stack')
 	else:
 		calculate()
 
@@ -61,6 +79,9 @@ func calculate():
 		collision_stack.position.y += collision_stack.shape.size.y / 2
 		activation_progress.custom_minimum_size = Vector2(cards[0].get_size().x, DataManager.card_header_size)
 		return
+	stack_to_card_collision.shape = create_stack_collision()
+	stack_to_card_collision.position.x = stack_to_card_collision.shape.size.x / 2
+	stack_to_card_collision.position.y = stack_to_card_collision.shape.size.y / 2
 	align_ordering()
 	change_collision()
 	align_cards()
@@ -182,6 +203,8 @@ func check_possible_production(card : Card):
 		DataManager.ProductionType.PART_MERGER:
 			if content_cards.size() != DataManager.parts_merger_count:
 				return false
+			if content_cards[0].card_type != DataManager.CardType.MONSTER_PART:
+				return false
 			var same_part_type : DataManager.MonsterPartType = content_cards[0].part_type
 			for content_card in content_cards:
 				if content_card.card_type != DataManager.CardType.MONSTER_PART:
@@ -261,16 +284,24 @@ func _on_input_event(_viewport, event, _shape_idx):
 			# Начинаем перетаскивание и запоминаем смещение мыши относительно центра
 			is_dragging = true
 			offset = global_position - get_global_mouse_position()
-			cards[cards.size() - 1].change_state(DataManager.CardState.DRAGGED)
+			#cards[cards.size() - 1].change_state(DataManager.CardState.DRAGGED)
 			z_index = 100
+			for card in cards:
+				card.change_collision_to_invisible_state()
+				card.input_pickable = false
+			activate_stack_to_card_collision(true)
+			intersected_areas.clear()
 		else:
 			# Отпускаем объект
-			var active_card : Card = cards[cards.size() - 1]
-			if active_card.intersected_card:
-				active_card.merge_stacks()
-			active_card.change_state(DataManager.CardState.IN_STACK)
+			var intersected_card : Card = get_closest_card()
+			if intersected_card:
+				merge_stacks(intersected_card)
 			is_dragging = false
 			z_index = 0
+			activate_stack_to_card_collision(false)
+			if cards.size() >= 2:
+					cards[cards.size() - 1].input_pickable = true
+					cards[cards.size() - 1].change_collision_to_stacked_state()
 			#cards[cards.size() - 1].change_state(DataManager.CardState.IN_STACK)
 
 
@@ -287,3 +318,40 @@ func _input(event):
 
 func update_progress_bar(new_value : float):
 	activation_progress.value = new_value
+
+
+func _on_stack_area_area_entered(area: Area2D) -> void:
+	var card : Card = area
+	if not intersected_areas.has(card):
+		intersected_areas.append(card)
+
+
+func _on_stack_area_area_exited(area: Area2D) -> void:
+	var card : Card = area
+	if intersected_areas.has(card):
+		intersected_areas.erase(card)
+
+
+func get_closest_card():
+	if intersected_areas.size() == 0:
+		return null
+	if intersected_areas.size() == 1:
+		return intersected_areas[0]
+	intersected_areas.sort_custom(func(a: Card, b: Card): return global_position.distance_to(a.global_position) < global_position.distance_to(b.global_position))
+	return intersected_areas[0]
+
+
+func merge_stacks(card : Card):
+	var stack : Stack = stack_scene.instantiate()
+	var cards_pool : Array[Card]
+	if card.stack:
+		cards_pool.append_array(card.stack.cards.duplicate(true))
+		card.stack.queue_free()
+	else:
+		cards_pool.append(card)
+	cards_pool.append_array(cards.duplicate())
+	GameManager.level.add_child(stack)
+	stack.global_position = card.global_position
+	for new_card in cards_pool:
+		stack.add_card(new_card)
+	queue_free()
