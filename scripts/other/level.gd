@@ -16,4 +16,4 @@ func _ready() -> void:
 	ProductionManager.create_stapler()
 	ProductionManager.create_motel()
 	ProductionManager.create_changeshop()
-	NpcManager.create_location_trader()
+	NpcManager.create_order_trader()

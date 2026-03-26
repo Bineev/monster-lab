@@ -18,3 +18,7 @@ func check_gold(gold_amount : int):
 
 func spend_gold(gold_amount : int):
 	current_gold -= gold_amount
+
+
+func add_gold(gold_amount : int):
+	current_gold += gold_amount

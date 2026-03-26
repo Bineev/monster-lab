@@ -9,9 +9,9 @@ class_name CardActorNPC
 @export var npc_quest_name : String
 @export var npc_quest_desc : String
 @export var replics : Array[String]
-@export var npc_quest_part_conditions : Array[DataManager.MonsterPartType]
-@export var npc_quest_grade_conditions : DataManager.EntityGrade
-@export var npc_quest_family_conditions : Array[DataManager.MonsterFamily]
+@export var quest_part_conditions : Array[DataManager.MonsterPartType]
+@export var quest_grade_conditions : DataManager.EntityGrade
+@export var quest_family_conditions : Array[DataManager.MonsterFamily]
 @export var npc_shop_content : Array[CardRes]
 @export var ncp_shop_lots_count : int
 @export var npc_mood : DataManager.OwnerType
@@ -33,9 +33,9 @@ func initialize():
 	npc_quest_name = npc_res.npc_quest_name 
 	npc_quest_desc = npc_res.npc_quest_desc 
 	replics = npc_res.replics 
-	npc_quest_part_conditions = npc_res.npc_quest_part_conditions 
-	npc_quest_grade_conditions = npc_res.npc_quest_grade_conditions 
-	npc_quest_family_conditions = npc_res.npc_quest_family_conditions 
+	quest_part_conditions = npc_res.quest_part_conditions 
+	quest_grade_conditions = npc_res.quest_grade_conditions 
+	quest_family_conditions = npc_res.quest_family_conditions 
 	npc_shop_content = npc_res.npc_shop_content 
 	ncp_shop_lots_count = npc_res.ncp_shop_lots_count 
 	npc_mood = npc_res.npc_mood 

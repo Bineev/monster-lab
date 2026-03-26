@@ -7,9 +7,11 @@ class_name Stack
 @export var cards : Array[Card]
 @export var production_card : CardProduction
 @export var location_card : CardLocation
+@export var order_card : CardOrder
 @export var is_can_product : bool
 @export var is_can_digg : bool
 @export var is_dragging : bool
+@export var is_can_get_reward : bool
 @export var offset : Vector2 = Vector2.ZERO
 @export var has_body : bool
 @export var has_hand : bool
@@ -101,6 +103,38 @@ func calculate():
 				start_digging()
 			elif is_can_digg and location_card.is_digg_in_progress:
 				continue_digging()
+		DataManager.CardType.ORDER:
+			order_card = cards[0]
+			is_can_get_reward = check_order_consistency()
+			if is_can_get_reward:
+				start_getting_reward()
+
+
+func check_order_consistency():
+	if cards.size() != 2:
+		return false
+	if cards[1].card_type != order_card.order_type:
+		return false
+	match order_card.order_type:
+		DataManager.CardType.MONSTER:
+			var monster : CardActorMonster = cards[1]
+			if monster.monster_parts.size() == 0:
+				return false
+			for i in range(order_card.quest_part_conditions.size()):
+				var concrete_part : DataManager.MonsterPartType = order_card.quest_part_conditions[i]
+				var concrete_family : DataManager.MonsterFamily = order_card.quest_family_conditions[i]
+				# проверяем фэмили
+				var has_consistency : bool
+				for part in monster.monster_parts:
+					if part.part_family == concrete_family and part.part_type == concrete_part and part.card_grade >= order_card.card_grade:
+						has_consistency = true
+				if not has_consistency:
+					return false
+			return true
+
+
+func start_getting_reward():
+	order_card.start_rewarding()
 
 
 func check_possible_digging(card : Card):
