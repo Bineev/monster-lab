@@ -29,7 +29,12 @@ card_owner_type = null
 [node name="panel_back" parent="." index="0"]
 self_modulate = Color(1, 0.78431374, 1, 1)
 
-[node name="MarginContainer" type="MarginContainer" parent="panel_back/container_content" index="2"]
+[node name="filler" type="Control" parent="panel_back/container_content" index="2"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="panel_back/container_content" index="3"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5

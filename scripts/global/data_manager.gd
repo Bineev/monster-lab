@@ -18,7 +18,7 @@ enum OwnerType {
 }
 
 enum MonsterPartType {
-	HEAD, RHAND, FOOT, BODY, LHAND
+	BODY, HEAD, L_ARM, R_ARM, L_LEG, R_LEG
 }
 
 enum EntityGrade {
@@ -45,12 +45,15 @@ enum MonsterFamily {
 	BONES, ANIMAL, HUMAN, GHOUL
 }
 
+enum MonsterBase {
+	SKELETON, ZOMBIE, 
+}
 
-var card_header_size : float = 18
+var card_header_size : float = 22
 
 var default_z_index : int = 5
 
-var parts_size : int = 5
+var parts_size : int = 6
 
 var monster_love_size : int = 2
 
@@ -65,3 +68,38 @@ var chances_dict : Dictionary[EntityGrade, float] = {
 	EntityGrade.T2 : 0.3,
 	EntityGrade.T3 : 1
 }
+
+# Словарь координат: Семейство -> Точки крепления на ТЕЛЕ
+const BASE_JOINTS = {
+	MonsterBase.ZOMBIE: {
+		MonsterPartType.HEAD:  Vector2(3.0,		-49.0),
+		MonsterPartType.L_ARM: Vector2(-7.0,	-41.0),
+		MonsterPartType.R_ARM: Vector2(12.0,	-41.0),
+		MonsterPartType.L_LEG: Vector2(-7.0,	-9.0),
+		MonsterPartType.R_LEG: Vector2(6.0,		-9.0)
+	},
+	MonsterBase.SKELETON: {
+		MonsterPartType.HEAD:  Vector2(5.0,		-49.0),
+		MonsterPartType.L_ARM: Vector2(-7.0,	-41.0),
+		MonsterPartType.R_ARM: Vector2(12.0,	-41.0),
+		MonsterPartType.L_LEG: Vector2(-7.0,	-14.0),
+		MonsterPartType.R_LEG: Vector2(6.0,		-15.0)
+	},
+	# Добавляем сюда новые виды по мере их отрисовки
+	# можно не добавлять апгрейднутых существ, если их размеры тела одинаковы
+	
+	#MonsterRace.SKELETON: {
+		#MonsterPartType.HEAD:  Vector2(,	),
+		#MonsterPartType.L_ARM: Vector2(,	),
+		#MonsterPartType.R_ARM: Vector2(,	),
+		#MonsterPartType.L_LEG: Vector2(,	),
+		#MonsterPartType.R_LEG: Vector2(,	)
+	#},
+	
+}
+
+# Функция, чтобы легко получать данные - вектора смещения для частей тел из их расы (тела):
+static func get_joint_pos(base: MonsterBase, type: MonsterPartType) -> Vector2:
+	if BASE_JOINTS.has(base) and BASE_JOINTS[base].has(type):
+		return BASE_JOINTS[base][type]
+	return Vector2.ZERO

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PartRes" load_steps=3 format=3 uid="uid://c3ouuw365aq5e"]
+
+[ext_resource type="Texture2D" uid="uid://cbu84nqfdmum2" path="res://img/skelet_R_arm.png" id="1_ft5j6"]
+[ext_resource type="Script" uid="uid://bll44gw1l0di2" path="res://resources/res_scripts/part_res.gd" id="1_vrttn"]
+
+[resource]
+script = ExtResource("1_vrttn")
+part_type = 3
+card_name = "Кости Руки (П)"
+card_texture = ExtResource("1_ft5j6")
+card_type = 2
+metadata/_custom_type_script = "uid://bll44gw1l0di2"

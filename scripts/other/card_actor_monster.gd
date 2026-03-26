@@ -9,11 +9,19 @@ class_name CardActorMonster
 @export var is_can_love : bool = true
 
 @onready var sprite_container: Node2D = %sprite_container
-@onready var sprite_rhand: Sprite2D = %sprite_rhand
-@onready var sprite_foot: Sprite2D = %sprite_foot
-@onready var sprite_body: Sprite2D = %sprite_body
-@onready var sprite_lhand: Sprite2D = %sprite_lhand
 @onready var sprite_head: Sprite2D = %sprite_head
+@onready var sprite_body: Sprite2D = %sprite_body
+@onready var sprite_l_arm: Sprite2D = %sprite_l_arm
+@onready var sprite_r_arm: Sprite2D = %sprite_r_arm
+@onready var sprite_l_leg: Sprite2D = %sprite_l_leg
+@onready var sprite_r_leg: Sprite2D = %sprite_r_leg
+
+# === НОВОЕ: Вспомогательная функция для поиска нужной части ===
+func get_part_res(type: DataManager.MonsterPartType) -> PartRes:
+	for part in monster_parts:
+		if part != null and part.part_type == type:
+			return part
+	return null
 
 
 
@@ -39,8 +47,45 @@ func initialize():
 	label_damage.text = str(actor_damage)
 	label_health.text = str(actor_health)
 	# собираем монстра
-	sprite_foot.texture = monster_res.monster_foot_texture
 	sprite_body.texture = monster_res.monster_body_texture
-	sprite_rhand.texture = monster_res.monster_rhand_texture
 	sprite_head.texture = monster_res.monster_head_texture
-	sprite_lhand.texture = monster_res.monster_lhand_texture
+	sprite_l_arm.texture = monster_res.monster_L_arm_texture
+	sprite_r_arm.texture = monster_res.monster_R_arm_texture
+	sprite_l_leg.texture = monster_res.monster_L_leg_texture
+	sprite_r_leg.texture = monster_res.monster_R_leg_texture
+
+# === НОВОЕ: Логика сборки по маркерам ===
+	# 1. Получаем ресурс тела, чтобы узнать его базу (например, ZOMBIE)
+	var body_part = get_part_res(DataManager.MonsterPartType.BODY)
+	
+	if body_part:
+		# переменная в part_res.gd - part_base 
+		var body_base = body_part.part_base 
+
+		# 2. Создаем список: [Тип, Имя маркера в дереве, Сам спрайт]
+		var joints_setup = [
+			[DataManager.MonsterPartType.HEAD, "Join_Head", sprite_head],
+			[DataManager.MonsterPartType.L_ARM, "Join_L_Arm", sprite_l_arm],
+			[DataManager.MonsterPartType.R_ARM, "Join_R_Arm", sprite_r_arm],
+			[DataManager.MonsterPartType.L_LEG, "Join_L_Leg", sprite_l_leg],
+			[DataManager.MonsterPartType.R_LEG, "Join_R_Leg", sprite_r_leg]
+		]
+#
+		# 3. Расставляем конечности
+		for setup in joints_setup:
+			var p_type = setup[0]
+			var marker_node_name = setup[1]
+			var sprite = setup[2]
+			
+			# Находим маркер внутри тела (так как у маркеров нет %, но это можно "исправить")
+			var marker = sprite_body.get_node_or_null(marker_node_name)
+			var limb_part = get_part_res(p_type)
+			
+			if limb_part and marker and sprite:
+				# Двигаем МАРКЕР на точку крепления текущего ТЕЛА
+				marker.position = DataManager.get_joint_pos(body_base, p_type)
+				
+				# Сдвигаем СПРАЙТ конечности на её родной оффсет
+				var limb_base = limb_part.part_base
+				sprite.offset = -DataManager.get_joint_pos(limb_base, p_type)
+	# ==============================================================

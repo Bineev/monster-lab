@@ -14,7 +14,10 @@ class_name Stack
 @export var is_can_get_reward : bool
 @export var offset : Vector2 = Vector2.ZERO
 @export var has_body : bool
-@export var has_hand : bool
+@export var has_l_arm : bool
+@export var has_r_arm : bool
+@export var has_l_leg : bool
+@export var has_r_leg : bool
 @export var has_head : bool
 @export var has_foot : bool
 @export var parts : Array[CardActorPart]
@@ -185,35 +188,48 @@ func check_possible_production(card : Card):
 									is_already_has_part = true
 							if not is_already_has_part:
 								parts.append(content_card)
-						DataManager.MonsterPartType.LHAND:
-							has_hand = true
-							var is_already_has_part : bool
-							for part in parts:
-								if part.part_type == DataManager.MonsterPartType.LHAND:
-									is_already_has_part = true
-							if not is_already_has_part:
-								parts.append(content_card)
-						DataManager.MonsterPartType.RHAND:
-							has_hand = true
-							var is_already_has_part : bool
-							for part in parts:
-								if part.part_type == DataManager.MonsterPartType.RHAND:
-									is_already_has_part = true
-							if not is_already_has_part:
-								parts.append(content_card)
-						DataManager.MonsterPartType.FOOT:
-							has_foot = true
-							var is_already_has_part : bool
-							for part in parts:
-								if part.part_type == DataManager.MonsterPartType.FOOT:
-									is_already_has_part = true
-							if not is_already_has_part:
-								parts.append(content_card)
+								
 						DataManager.MonsterPartType.HEAD:
 							has_head = true
 							var is_already_has_part : bool
 							for part in parts:
 								if part.part_type == DataManager.MonsterPartType.HEAD:
+									is_already_has_part = true
+							if not is_already_has_part:
+								parts.append(content_card)
+								
+						DataManager.MonsterPartType.L_ARM:
+							has_l_arm = true
+							var is_already_has_part : bool
+							for part in parts:
+								if part.part_type == DataManager.MonsterPartType.L_ARM:
+									is_already_has_part = true
+							if not is_already_has_part:
+								parts.append(content_card)
+								
+						DataManager.MonsterPartType.R_ARM:
+							has_r_arm = true
+							var is_already_has_part : bool
+							for part in parts:
+								if part.part_type == DataManager.MonsterPartType.R_ARM:
+									is_already_has_part = true
+							if not is_already_has_part:
+								parts.append(content_card)
+								
+						DataManager.MonsterPartType.L_LEG:
+							has_l_leg = true
+							var is_already_has_part : bool
+							for part in parts:
+								if part.part_type == DataManager.MonsterPartType.L_LEG:
+									is_already_has_part = true
+							if not is_already_has_part:
+								parts.append(content_card)
+								
+						DataManager.MonsterPartType.R_LEG:
+							has_r_leg = true
+							var is_already_has_part : bool
+							for part in parts:
+								if part.part_type == DataManager.MonsterPartType.R_LEG:
 									is_already_has_part = true
 							if not is_already_has_part:
 								parts.append(content_card)

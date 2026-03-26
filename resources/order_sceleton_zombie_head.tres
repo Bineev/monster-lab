@@ -5,6 +5,8 @@
 
 [resource]
 script = ExtResource("1_4ef6k")
+quest_part_conditions = Array[int]([1, 0, 2, 3, 4, 5])
+quest_family_conditions = Array[int]([3, 0, 0, 0, 0, 0])
 order_type = 3
 reward_amount = 10
 card_name = "заказ"

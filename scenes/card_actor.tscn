@@ -17,7 +17,12 @@ actor_damage = 0
 offset_right = 80.0
 offset_bottom = 110.0
 
-[node name="MarginContainer" type="MarginContainer" parent="panel_back/container_content" index="2"]
+[node name="filler" type="Control" parent="panel_back/container_content" index="2"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="panel_back/container_content" index="3"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5

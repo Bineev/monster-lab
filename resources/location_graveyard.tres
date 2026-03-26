@@ -1,21 +1,27 @@
-[gd_resource type="Resource" script_class="LocationRes" load_steps=8 format=3 uid="uid://bde2idpoq2fwl"]
+[gd_resource type="Resource" script_class="LocationRes" load_steps=15 format=3 uid="uid://bde2idpoq2fwl"]
 
 [ext_resource type="Script" uid="uid://ycs334vjj71c" path="res://resources/res_scripts/location_res.gd" id="1_132ef"]
 [ext_resource type="Texture2D" uid="uid://d6luferd7r3b" path="res://img/l_graveyard.png" id="1_sai12"]
-[ext_resource type="Resource" uid="uid://4tfjyvnnk6vd" path="res://resources/part_body_zobmie.tres" id="3_uyrmc"]
-[ext_resource type="Resource" uid="uid://ch1kuda2hjwk0" path="res://resources/part_foot_zombie.tres" id="4_mulg0"]
-[ext_resource type="Resource" uid="uid://cxwlimbpjwu6d" path="res://resources/part_rhand_zombie.tres" id="5_qk7mj"]
-[ext_resource type="Resource" uid="uid://dcnhq6nhduh47" path="res://resources/part_head_zombie.tres" id="6_5vv2x"]
-[ext_resource type="Resource" uid="uid://bwyamvcsk4xdo" path="res://resources/part_lhand_zombie.tres" id="6_uyrmc"]
+[ext_resource type="Resource" path="res://resources/part_skelet_body.tres" id="2_2wpmx"]
+[ext_resource type="Resource" uid="uid://1xiwwnhxasqw" path="res://resources/part_skelet_head.tres" id="3_vw2b2"]
+[ext_resource type="Resource" uid="uid://c2jd3nrocpjcn" path="res://resources/part_skelet_L_arm.tres" id="4_rnxi1"]
+[ext_resource type="Resource" uid="uid://bpfh1x62nemwp" path="res://resources/part_skelet_L_leg.tres" id="5_8u4dp"]
+[ext_resource type="Resource" uid="uid://c3ouuw365aq5e" path="res://resources/part_skelet_R_arm.tres" id="6_nst4h"]
+[ext_resource type="Resource" uid="uid://bxmqhge3ei5wm" path="res://resources/part_skelet_R_leg.tres" id="7_vcj1g"]
+[ext_resource type="Resource" uid="uid://w328pndya4hh" path="res://resources/part_zombie_body.tres" id="8_r26xw"]
+[ext_resource type="Resource" uid="uid://dokfgl66o7agf" path="res://resources/part_zombie_head.tres" id="9_8iyg0"]
+[ext_resource type="Resource" uid="uid://4mnnsho3naq8" path="res://resources/part_zombie_L_arm.tres" id="10_2wpmx"]
+[ext_resource type="Resource" uid="uid://rhm7pethaxdo" path="res://resources/part_zombie_L_leg.tres" id="11_vw2b2"]
+[ext_resource type="Resource" uid="uid://ckfbd1gpq0488" path="res://resources/part_zombie_R_leg.tres" id="12_rnxi1"]
+[ext_resource type="Resource" uid="uid://bugp7hh8r6io1" path="res://resources/part_zombie_R_arm.tres" id="13_8u4dp"]
 
 [resource]
 script = ExtResource("1_132ef")
-loot_pool = Array[Resource]([ExtResource("3_uyrmc"), ExtResource("4_mulg0"), ExtResource("5_qk7mj"), ExtResource("6_5vv2x"), ExtResource("6_uyrmc")])
+loot_pool = Array[Resource]([ExtResource("2_2wpmx"), ExtResource("3_vw2b2"), ExtResource("4_rnxi1"), ExtResource("5_8u4dp"), ExtResource("6_nst4h"), ExtResource("7_vcj1g"), ExtResource("8_r26xw"), ExtResource("9_8iyg0"), ExtResource("10_2wpmx"), ExtResource("11_vw2b2"), ExtResource("12_rnxi1"), ExtResource("13_8u4dp")])
 card_name = "Кладбище"
 card_desc = "Можно раскопать разные интересности. Перетащите юнита, чтобы начать вандализм "
 activate_speed = 5.0
 use_count = 100
 card_texture = ExtResource("1_sai12")
 card_type = 1
-card_cost = 10
 metadata/_custom_type_script = "uid://ycs334vjj71c"
