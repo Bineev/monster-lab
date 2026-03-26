@@ -10,3 +10,5 @@ class_name CardRes
 @export var use_count : int
 @export var card_texture : Texture2D
 @export var card_type : DataManager.CardType
+@export var card_cost : int
+@export var card_owner_type : DataManager.OwnerType

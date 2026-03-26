@@ -14,9 +14,11 @@ class_name Card
 @export var prev_z_index : int
 @export var card_type : DataManager.CardType
 @export var card_grade : DataManager.EntityGrade
+@export var card_cost : int
 @export var card_texture : Texture2D
-@export var stylebox_tooltip : StyleBoxFlat = preload('res://styles/card_back.tres')
-@export var font_tooltip : Font = preload('res://styles/DigitalPixelV124-Regular.otf')
+@export var card_owner_type : DataManager.OwnerType
+@export var stylebox_tooltip : StyleBoxFlat
+@export var font_tooltip : Font
 @export var intersected_areas : Array[Card]
 
 @onready var collision_card: CollisionShape2D = %collision_card
@@ -101,6 +103,8 @@ func _on_area_entered(area: Area2D) -> void:
 	if card_state != DataManager.CardState.HOVER_STACK and card_state != DataManager.CardState.DRAGGED:
 		return
 	var card : Card = area
+	if card.card_owner_type != DataManager.OwnerType.PLAYER:
+		return
 	if not intersected_areas.has(card):
 		intersected_areas.append(card)
 	change_state(DataManager.CardState.HOVER_STACK)
@@ -180,6 +184,8 @@ func _on_anim_card_animation_finished(anim_name: StringName) -> void:
 		#position += event.relative
 
 func _on_input_event(_viewport, event, _shape_idx):
+	if card_owner_type != DataManager.OwnerType.PLAYER:
+		return
 	if GameManager.is_captured:
 		return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:

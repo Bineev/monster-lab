@@ -17,4 +17,5 @@ activate_speed = 5.0
 use_count = 100
 card_texture = ExtResource("1_sai12")
 card_type = 1
+card_cost = 10
 metadata/_custom_type_script = "uid://ycs334vjj71c"

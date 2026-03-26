@@ -1,0 +1,20 @@
+extends Node
+
+@export var npc_scene : PackedScene = preload("res://scenes/card_actor_npc.tscn")
+@export var npc_trader_location_res : NPCRes = preload("res://resources/NPC_location_trader.tres")
+
+
+func create_random_trader():
+	pass
+
+
+func create_trader_by_type(trader_type : DataManager.CardType):
+	pass
+
+
+func create_location_trader():
+	var npc : CardActorNPC = npc_scene.instantiate()
+	npc.npc_res = npc_trader_location_res
+	GameManager.level.player_actors.add_child(npc)
+	npc.initialize()
+	npc.global_position = Vector2(600 + randi_range(-150, 150), randf_range(DataManager.npc_positions[0], DataManager.npc_positions[1]))

@@ -6,7 +6,11 @@ enum CardState {
 }
 
 enum CardType {
-	PRODUCTION, LOCATION, MONSTER_PART, MONSTER, ENVIRONMENT, RES, ITEM, RECEPT
+	PRODUCTION, LOCATION, MONSTER_PART, MONSTER, ENVIRONMENT, RES, ITEM, RECEPT, NPC
+}
+
+enum NPCType {
+	QUESTER, TRADER, BUYER
 }
 
 enum OwnerType {
@@ -53,6 +57,8 @@ var monster_love_size : int = 2
 var parts_merger_count : int = 5
 
 var max_grade : int = 2
+
+var npc_positions : Array[float] = [-500, -200]
 
 var chances_dict : Dictionary[EntityGrade, float] = {
 	EntityGrade.T1 : 0.1,

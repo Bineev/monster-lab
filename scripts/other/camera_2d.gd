@@ -12,7 +12,7 @@ var is_dragging = false
 
 func _unhandled_input(event):
 	# пока зум отключен
-	return
+	#return
 	# Логика ЗУМА
 	if event.is_action_pressed("zoom_out"):
 		zoom_to(target_zoom - Vector2(zoom_speed, zoom_speed))

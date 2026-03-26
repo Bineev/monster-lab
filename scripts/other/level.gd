@@ -10,8 +10,10 @@ class_name Level
 
 func _ready() -> void:
 	GameManager.level = self
+	PlayerManager.initialize()
 	MonsterManager.create_grandpa()
 	LocationManager.create_graveyard()
 	ProductionManager.create_stapler()
 	ProductionManager.create_motel()
 	ProductionManager.create_changeshop()
+	NpcManager.create_location_trader()

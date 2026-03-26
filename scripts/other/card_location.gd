@@ -20,6 +20,8 @@ class_name CardLocation
 
 func initialize():
 	await get_tree().process_frame
+	card_owner_type = location_res.card_owner_type
+	card_cost = location_res.card_cost
 	card_type = location_res.card_type
 	card_texture = location_res.card_texture
 	card_grade = location_res.card_grade

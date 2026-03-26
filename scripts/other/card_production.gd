@@ -21,8 +21,10 @@ class_name CardProduction
 func initialize():
 	await get_tree().process_frame
 	card_type = production_res.card_type
+	card_owner_type = production_res.card_owner_type
 	card_texture = production_res.card_texture
 	card_grade = production_res.card_grade
+	card_cost = production_res.card_cost
 	production_name = production_res.card_name
 	production_desc = production_res.card_desc
 	product_speed = production_res.activate_speed

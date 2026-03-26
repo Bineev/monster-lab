@@ -13,6 +13,7 @@ func initialize():
 	card_type = part_res.card_type
 	card_texture = part_res.card_texture
 	card_grade = part_res.card_grade
+	card_cost = part_res.card_cost
 	actor_name = part_res.card_name
 	actor_desc = part_res.card_desc
 	actor_health = part_res.actor_health
